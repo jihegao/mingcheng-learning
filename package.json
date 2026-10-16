@@ -6,7 +6,7 @@
   "engines": { "node": ">=22" },
   "scripts": {
     "check": "node scripts/check.mjs",
-    "test": "npm run check && node --test sites/rocket/tests/*.test.js",
+    "test": "npm run check && node --test sites/rocket/tests/*.test.js && python3 -B -m unittest discover -s tests -p 'test_*.py'",
     "build": "node scripts/build.mjs",
     "verify:live": "node scripts/verify-live.mjs",
     "manifest": "node scripts/manifest.mjs",

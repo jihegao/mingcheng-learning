@@ -12,7 +12,7 @@
     <a class="brand" href="/">AP CSP · Mingcheng</a>
     <div class="eyebrow">Code practice · guided Python build</div>
     <h1>Build a CLI diary from zero</h1>
-    <p>Start with an empty Python file. Make a menu, add and list entries, save them between runs, and finally search them. Each step gives you a small behavior to test before you continue.</p>
+    <p>Start with an empty Python file. Show the diary list as your operation center, then search, add, delete, or view and edit entries. Save changes between runs. Each step gives you a small behavior to test before you continue.</p>
   </header>
   <main>
     <a class="back" href="/">← Back to all handouts and practice</a>
@@ -22,17 +22,18 @@
     <article>
       <section id="plan">
         <h2>0. Decide what the first version must do</h2>
-        <p>A command-line interface (CLI) uses the terminal for input and output. Our smallest useful diary needs four choices:</p>
+        <p>A command-line interface (CLI) uses the terminal for input and output. The diary list is our operation center: display it immediately at startup, then show the menu. After each operation, return to the refreshed list and menu.</p>
         <table>
           <thead><tr><th>Choice</th><th>Input</th><th>Program action</th><th>Output</th></tr></thead>
           <tbody>
-            <tr><td>Add</td><td>One line of fictional text</td><td>Reject blank text; save a record</td><td>A saved message</td></tr>
-            <tr><td>List</td><td>No extra input</td><td>Read saved records</td><td>Numbered entries</td></tr>
-            <tr><td>Search</td><td>A word</td><td>Keep records containing that word</td><td>Matches or “no match”</td></tr>
-            <tr><td>Quit</td><td>No extra input</td><td>Stop the menu loop</td><td>A goodbye message</td></tr>
+            <tr><td>1 Search</td><td>A word, then an optional result number</td><td>Filter entries; view the chosen match</td><td>Matches or “no match”</td></tr>
+            <tr><td>2 Add</td><td>One line of fictional text</td><td>Reject blank text; save a record</td><td>A saved message and refreshed list</td></tr>
+            <tr><td>3 Delete</td><td>An entry number and confirmation</td><td>Remove only the chosen record</td><td>A deletion message and refreshed list</td></tr>
+            <tr><td>4 View/edit</td><td>An entry number, then an action</td><td>Show the entry; optionally edit or delete it</td><td>The entry and any saved change</td></tr>
+            <tr><td>5 Quit</td><td>No extra input</td><td>Stop the menu loop</td><td>A goodbye message</td></tr>
           </tbody>
         </table>
-        <p>We will first make Add and List work only while the program is running. Losing the entries on restart will show why a file is needed.</p>
+        <p>Flow: load entries → display the list (or an empty-list message) → choose an operation → return to the list. Quit ends the loop. We will build this in small steps: first memory, then files, search, and finally editing and deletion. List display is automatic, so it needs no menu choice.</p>
       </section>
 
       <section id="setup">
@@ -45,41 +46,46 @@
       <section id="menu">
         <h2>2. Build the menu loop</h2>
         <p>Type this into <code>diary.py</code>. Each <code>if</code> branch is a placeholder for one future feature.</p>
-        <pre id="stage-menu">while True:
-    print("\nCLI Diary: 1 Add | 2 List | 3 Search | 4 Quit")
-    choice = input("Choose 1–4: ").strip()
+        <pre id="stage-menu">entries = []
+while True:
+    print("\nYour diary entries:")
+    print("No entries yet. Add one to begin.")
+    print("\nCLI Diary: 1 Search | 2 Add | 3 Delete | 4 View/edit | 5 Quit")
+    choice = input("Choose 1–5: ").strip()
     if choice == "1":
-        print("Add comes next.")
+        print("Search comes later.")
     elif choice == "2":
-        print("List comes next.")
+        print("Add comes next.")
     elif choice == "3":
-        print("Search comes next.")
+        print("Delete comes later.")
     elif choice == "4":
+        print("View/edit comes later.")
+    elif choice == "5":
         print("Goodbye.")
         break
     else:
-        print("Choose 1, 2, 3, or 4.")</pre>
-        <p><code>input()</code> waits for the user. <code>strip()</code> removes surrounding spaces. <code>while True</code> keeps showing the menu, and <code>break</code> stops it when the user chooses Quit.</p>
-        <div class="card"><h3>Checkpoint A</h3><p>Run the file. Try <code>1</code>, an invalid choice, and <code>4</code>. Explain why the menu reappears after the first two choices but not after Quit.</p></div>
+        print("Choose 1, 2, 3, 4, or 5.")</pre>
+        <p><code>input()</code> waits for the user. <code>strip()</code> removes surrounding spaces. <code>while True</code> keeps showing the list and menu, and <code>break</code> stops it when the user chooses Quit.</p>
+        <div class="card"><h3>Checkpoint A</h3><p>Run the file. Check that the empty list appears before the menu. Try <code>2</code>, an invalid choice, and <code>5</code>. Explain why the menu reappears after the first two choices but not after Quit.</p></div>
       </section>
 
       <section id="memory">
         <h2>3. Add and list entries in memory</h2>
-        <p>Put <code>entries = []</code> above <code>while True</code>. Replace only the Add and List branches with the code below; keep Search, Quit, and the invalid-choice branch.</p>
-        <pre id="stage-memory">if choice == "1":
-    text = input("Write one fictional entry: ").strip()
+        <p>Keep <code>entries = []</code> above the loop. Inside the loop, replace the empty-list placeholder with this display block, before printing the menu:</p>
+        <pre id="stage-memory-list">if entries:
+    for number, text in enumerate(entries, start=1):
+        print(f"{number}. {text}")
+else:
+    print("No entries yet. Add one to begin.")</pre>
+        <p>Replace only the Add branch; keep the other branches:</p>
+        <pre id="stage-memory">elif choice == "2":
+    text = input("Write one fictional entry (Enter to cancel): ").strip()
     if text:
         entries.append(text)
         print("Entry added.")
     else:
-        print("Nothing was added.")
-elif choice == "2":
-    if entries:
-        for number, text in enumerate(entries, start=1):
-            print(f"{number}. {text}")
-    else:
-        print("No entries yet.")</pre>
-        <p>The list is the first data structure. <code>append()</code> adds one item; the <code>for</code> loop displays every item. Add two fictional sentences and list them. Then quit and restart: the list is empty because it existed only in memory.</p>
+        print("Nothing was added.")</pre>
+        <p>The list is the first data structure. <code>append()</code> adds one item; the <code>for</code> loop displays every item. Add two fictional sentences. Both appear automatically before the next menu. Then quit and restart: the list is empty because it existed only in memory.</p>
         <div class="card"><h3>Checkpoint B</h3><p>Predict the output before testing: What happens if you choose Add and press Enter without typing text? What happens to the two entries after a restart?</p></div>
       </section>
 
@@ -107,45 +113,94 @@ def load_entries():
         return []
     with DATA_FILE.open("r", encoding="utf-8") as file:
         return [json.loads(line) for line in file if line.strip()]</pre>
-        <p>Remove <code>entries = []</code>. In Add, replace <code>entries.append(text)</code> with <code>save_entry(text)</code>. Replace the List branch with:</p>
-        <pre id="stage-list">elif choice == "2":
-    entries = load_entries()
-    if entries:
-        for number, entry in enumerate(entries, start=1):
-            print(f'{number}. [{entry["created_at"]}] {entry["text"]}')
-    else:
-        print("No entries yet.")</pre>
+        <p>Remove <code>entries = []</code>. In Add, replace <code>entries.append(text)</code> with <code>save_entry(text)</code>. At the beginning of the loop, replace the heading and memory-list display with:</p>
+        <pre id="stage-list">entries = load_entries()
+print("\nYour diary entries:")
+if entries:
+    for number, entry in enumerate(entries, start=1):
+        print(f'{number}. [{entry["created_at"]}] {entry["text"]}')
+else:
+    print("No entries yet. Add one to begin.")</pre>
         <p><code>Path.home()</code> keeps the data outside this website and your practice folder. File mode <code>"a"</code> appends a line without replacing older lines. <code>json.dumps()</code> turns a dictionary into text; <code>json.loads()</code> turns that text back into a dictionary. One JSON object per line is called JSON Lines.</p>
         <pre>{"created_at":"2026-09-29T10:30+08:00","text":"Today I compared two data sets."}</pre>
         <p>The time stamp is <strong>metadata</strong>: it describes the diary entry. It is useful for organizing entries, but it is not the entry's text.</p>
-        <div class="card"><h3>Checkpoint C</h3><p>Add a fictional entry, quit, restart, and choose List. The entry should still appear. Find the exact data path by reading <code>DATA_DIR</code> and <code>DATA_FILE</code>; do not copy the saved file into the website folder.</p></div>
+        <div class="card"><h3>Checkpoint C</h3><p>Add a fictional entry, quit, restart, and inspect the startup list. The entry should still appear. Find the exact data path by reading <code>DATA_DIR</code> and <code>DATA_FILE</code>; do not copy the saved file into the website folder.</p></div>
       </section>
 
       <section id="search">
         <h2>5. Add a case-insensitive search</h2>
-        <p>Replace the Search placeholder with this branch. It reads the file, keeps matching records, and displays them.</p>
-        <pre id="stage-search">elif choice == "3":
-    term = input("Search word: ").strip().casefold()
+        <p>Replace the Search placeholder with this branch. It uses the entries loaded at the start of this loop, keeps the positions of matching records, and displays them. Selecting a result comes in the next step.</p>
+        <pre id="stage-search">if choice == "1":
+    term = input("Search word (Enter to cancel): ").strip().casefold()
     if not term:
-        print("Enter a search word.")
+        print("Search cancelled.")
     else:
-        matches = [
-            entry for entry in load_entries()
+        indices = [
+            index for index, entry in enumerate(entries)
             if term in entry["text"].casefold()
         ]
-        if matches:
-            for number, entry in enumerate(matches, start=1):
+        if indices:
+            for number, index in enumerate(indices, start=1):
+                entry = entries[index]
                 print(f'{number}. [{entry["created_at"]}] {entry["text"]}')
         else:
             print("No matching entries.")</pre>
-        <p><code>casefold()</code> makes ordinary letter-case differences irrelevant to this search. The list comprehension is a filter: it builds a new list containing only the entries that meet the condition.</p>
+        <p><code>casefold()</code> makes ordinary letter-case differences irrelevant to this search. The list comprehension is a filter (a query): it builds a list of positions whose entries meet the condition. Filtering changes which entries are shown; sorting changes their order. This search keeps the original saved order and does not sort or change the saved data.</p>
         <div class="card"><h3>Checkpoint D</h3><p>Save an entry containing <code>Python</code>. Search for <code>python</code>, then for a word that is absent, then press Enter at the search prompt. Explain all three results.</p></div>
       </section>
 
       <section id="refactor">
-        <h2>6. Refactor after the behavior works</h2>
-        <p>The Add and Search branches are getting long, and List and Search repeat the same display loop. Give those tasks names: <code>add_entry()</code>, <code>search_entries()</code>, and <code>show_entries(entries)</code>. Put the menu in <code>main()</code>, then call <code>main()</code> at the bottom of the file. The behavior stays the same; the code becomes easier to read and change.</p>
-        <p>After you have tried the steps yourself, compare your program with the <a href="diary.py">complete reference implementation</a>. It uses these functions and keeps the same local JSON Lines file.</p>
+        <h2>6. Use procedures, then complete CRUD</h2>
+        <p>Before adding more behavior, give repeated tasks names: <code>show_entries(entries, indices=None, empty_message=...)</code> displays a full list or selected positions; <code>add_entry()</code> adds text; <code>search_entries(entries)</code> searches the current list. Put the single menu loop in <code>main()</code> and call it at the bottom. Use <code>return</code> to finish an operation; never call <code>main()</code> from another menu or from itself.</p>
+        <p>CRUD means Create (Add), Read (List, Search, View), Update (Edit), and Delete. Add already appends with file mode <code>"a"</code>. Editing or deleting requires writing the whole remaining list with mode <code>"w"</code>, which replaces the file contents. Load the list first, change only the selected entry, then write all remaining records in the same JSON Lines format:</p>
+        <pre id="stage-rewrite">def write_entries(entries):
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    with DATA_FILE.open(&quot;w&quot;, encoding=&quot;utf-8&quot;) as file:
+        for entry in entries:
+            file.write(json.dumps(entry, ensure_ascii=False) + &quot;\n&quot;)</pre>
+        <p>Display numbers start at 1; Python positions start at 0. A search adds another difference: its first result might be the third saved entry. Use <code>indices</code> as a mapping. For example, <code>[2, 4]</code> means result 1 is <code>entries[2]</code> and result 2 is <code>entries[4]</code>. For the full list, use <code>list(range(len(entries)))</code>. Validate input before indexing:</p>
+        <pre id="stage-choose">def choose_entry(indices):
+    if not indices:
+        return None
+    choice = input(&quot;Entry number (Enter to cancel): &quot;).strip()
+    if not choice:
+        print(&quot;Cancelled.&quot;)
+        return None
+    try:
+        number = int(choice)
+    except ValueError:
+        print(&quot;Choose a displayed entry number.&quot;)
+        return None
+    if not 1 &lt;= number &lt;= len(indices):
+        print(&quot;Choose a displayed entry number.&quot;)
+        return None
+    return indices[number - 1]</pre>
+        <p><code>try</code>/<code>except ValueError</code> handles text that cannot become an integer. The range check rejects zero, negative numbers, and numbers outside the displayed list. <code>None</code> means no selection; test <code>index is not None</code>, since position 0 is valid.</p>
+        <p>After displaying the matches with <code>show_entries(entries, indices, "No matching entries.")</code>, add this selection step to <code>search_entries(entries)</code>:</p>
+        <pre id="stage-selection">index = choose_entry(indices)
+if index is not None:
+    view_entry(entries, index)</pre>
+        <p>Use these procedures for editing and deleting. Editing keeps the creation time and any other existing fields. A blank replacement cancels. Deletion previews the chosen entry and requires <code>y</code>; any other reply cancels.</p>
+        <pre id="stage-edit">def edit_entry(entries, index):
+    text = input(&quot;Replacement text (Enter to cancel): &quot;).strip()
+    if not text:
+        print(&quot;Nothing was changed.&quot;)
+        return
+    entries[index][&quot;text&quot;] = text
+    write_entries(entries)
+    print(&quot;Entry updated locally.&quot;)</pre>
+        <pre id="stage-delete">def delete_entry(entries, index):
+    entry = entries[index]
+    print(f&#x27;Delete [{entry[&quot;created_at&quot;]}] {entry[&quot;text&quot;]}&#x27;)
+    confirm = input(&quot;Type y to delete (Enter to cancel): &quot;).strip().casefold()
+    if confirm != &quot;y&quot;:
+        print(&quot;Nothing was deleted.&quot;)
+        return
+    del entries[index]
+    write_entries(entries)
+    print(&quot;Entry deleted locally.&quot;)</pre>
+        <p>In <code>view_entry(entries, index)</code>, print the chosen entry, then offer 1 Edit, 2 Delete, or Enter to return. In <code>main()</code>, Search calls <code>search_entries(entries)</code>, Add calls <code>add_entry()</code>, and Delete and View/edit use <code>choose_entry(list(range(len(entries))))</code> before calling the matching procedure. An empty list makes no selection. After a procedure returns, the loop reloads and displays the saved list, so old search numbers are not reused.</p>
+        <p>Compare and complete your refactor with the <a href="diary.py">complete reference implementation</a>, including <code>show_entries</code>, <code>view_entry</code>, and <code>main</code>. Keep the imports, paths, and storage helpers above these procedures. The reference uses the same local JSON Lines file as step 4.</p>
         <p><a class="button" href="diary.py" download>Download the complete reference code</a></p>
       </section>
 
@@ -154,11 +209,17 @@ def load_entries():
         <table>
           <thead><tr><th>Test</th><th>Expected observation</th></tr></thead>
           <tbody>
+            <tr><td>Start with no saved entries; try Search, Delete, and View/edit.</td><td>An empty-list or no-match message appears; no invalid selection is used.</td></tr>
             <tr><td>Add only spaces.</td><td>No new record is saved.</td></tr>
-            <tr><td>Add two fictional sentences, quit, restart, then List.</td><td>Both sentences remain in order.</td></tr>
+            <tr><td>Add two fictional sentences, quit, then restart.</td><td>Both sentences appear before the first menu, in saved order.</td></tr>
             <tr><td>Search with different capitalization.</td><td>The matching entry appears.</td></tr>
             <tr><td>Search for an absent word or submit a blank search.</td><td>A clear message appears; the program keeps running.</td></tr>
             <tr><td>Add a fictional sentence in Chinese, then restart.</td><td>The characters remain readable.</td></tr>
+            <tr><td>Add Alpha, Python B, and Python C. Search python; select result 2 and edit it.</td><td>Only Python C changes; Alpha and Python B stay unchanged. The full list returns.</td></tr>
+            <tr><td>Search python again; select result 1, choose Delete, and confirm y.</td><td>Only Python B is removed. Restart and verify that the change persists.</td></tr>
+            <tr><td>Enter letters, 0, a negative number, or an oversized entry number.</td><td>A message appears; no entry changes.</td></tr>
+            <tr><td>Cancel a selection, blank edit, or deletion confirmation; then repeat an operation.</td><td>Cancelled actions leave the file unchanged. Fresh numbers refer to the refreshed list.</td></tr>
+            <tr><td>Delete the last entry, restart, and add another.</td><td>The empty-list message appears; adding still works.</td></tr>
           </tbody>
         </table>
         <p>If the saved file is manually damaged, this beginner version can fail while loading it. A later improvement is to report a malformed line without silently inventing or deleting data.</p>
@@ -167,14 +228,13 @@ def load_entries():
       <section id="extend">
         <h2>Make one change of your own</h2>
         <ol>
-          <li><strong>Starter:</strong> Show newest entries first without changing their order in the saved file.</li>
+          <li><strong>Starter:</strong> Explain why searching for a word filters entries rather than sorting them.</li>
           <li><strong>Core:</strong> Make Search print how many entries matched.</li>
-          <li><strong>Challenge:</strong> Add a <code>tag</code> field and search by tag. Decide what to do with older entries that have no tag.</li>
+          <li><strong>Challenge:</strong> Show newest entries first without changing the saved order. Keep a mapping to original positions so selecting, editing, and deleting still target the right entry.</li>
         </ol>
         <h2>Independent checkpoint</h2>
-        <p>Close AI assistance. Demonstrate one successful run and explain one input, one processing step, one output, why the time stamp is metadata, and one privacy limit of a plain-text file. Submit your code, fictional test output, and explanation. Do not submit the saved diary file.</p>
+        <p>Close AI assistance. Demonstrate one successful run and explain one input, one processing step, one output, how a displayed search number maps to a saved entry, why the time stamp is metadata, and one privacy limit of a plain-text file. Submit your code, fictional test output, and explanation. Do not submit the saved diary file.</p>
       </section>
-
       <section id="frq" lang="zh-CN">
         <h2>8. 如果用日记程序练习 Create / FRQ，应该怎样回答？</h2>
         <p>这里的文件名是 <code>diary.py</code>。AP CSP 的做法是先完成 Create Performance Task，再在考试中围绕自己的程序回答书面问题。下面用这份课堂程序示范如何寻找代码证据，所有练习情境与英文示例均为原创，不是官方题干或固定标准答案。</p>
@@ -189,36 +249,36 @@ def load_entries():
         <div class="notice"><strong>课堂练习与正式作品：</strong>本页及下载代码属于教学参考和练习任务，不能原样作为正式 Create 提交，也不能把下面的练习答案填进 PPR。正式任务应按当年规则完成自己的项目，标注允许使用的外部/AI 代码来源，并能独立解释。这里讨论的是“同类日记项目如何准备”，不是认可这份参考代码为学生原创作品。</div>
 
         <h3>先选对程序证据，再写回答</h3>
-        <p>就代码结构而言，现有 <code>show_entries(entries)</code> 是清晰的过程分析对象：参数 <code>entries</code> 决定输出哪些记录；先检查空列表（选择），再按顺序遍历记录（迭代），取出时间和正文并打印（顺序）。<code>main()</code> 中的 <code>show_entries(load_entries())</code> 是一次调用。<code>search_entries()</code> 没有参数，不能因为它含搜索逻辑就把它当作符合 PPR 参数要求的过程。这些结构分析不代表参考代码满足学生原创要求。</p>
-        <p>练习列表证据时，可沿着 <code>search_entries()</code> 中的 <code>matches = [...]</code>（把筛选结果存入列表）与 <code>show_entries(matches)</code> 的调用，追踪到 <code>show_entries</code> 内对参数 <code>entries</code> 的遍历；这时二者指向同一个列表。应同时看清存储、传参和使用，不能把文件 <code>entries.jsonl</code> 本身叫作 Python 列表。正式 PPR 应从自己的程序中独立选择对应片段。</p>
+        <p>就代码结构而言，现有 <code>show_entries(entries, indices=None, empty_message=...)</code> 是清晰的过程分析对象：<code>entries</code> 提供记录，<code>indices</code> 决定显示哪些位置及顺序，<code>empty_message</code> 决定空结果提示。过程先准备位置列表，再检查空列表（选择），随后遍历位置（迭代），取出时间和正文并打印（顺序）。<code>main()</code> 中的 <code>show_entries(entries)</code> 是一次调用；搜索使用 <code>show_entries(entries, indices, "No matching entries.")</code>。现在的 <code>search_entries(entries)</code> 也有参数，不能沿用旧版“搜索过程没有参数”的描述。这些结构分析不代表参考代码满足学生原创要求。</p>
+        <p>练习列表证据时，可沿着 <code>search_entries(entries)</code> 中的 <code>indices = [...]</code>（把匹配记录的原位置存入列表），追踪到 <code>show_entries</code> 内对这些位置的遍历，以及 <code>choose_entry(indices)</code> 中的 <code>indices[number - 1]</code>。例如 <code>[2, 4]</code> 把显示编号 1、2 映射回原列表位置 2、4；编辑和删除都使用返回的原位置。<code>entries</code> 是字典记录列表，<code>indices</code> 是整数位置列表，文件 <code>entries.jsonl</code> 本身不是 Python 列表。正式 PPR 应从自己的程序中独立选择对应片段。</p>
 
         <h3>WR1 · Program Design, Function, and Purpose</h3>
         <p><strong>练习方向：</strong>程序服务谁、解决什么问题？说明一个输入如何产生输出。回答要区分目的（为什么需要）与功能（程序做什么）。</p>
-        <div class="card"><p><strong>英文示例：</strong>My program helps a learner save and retrieve short practice notes. The user enters a note through the terminal, and the program stores its text with a timestamp in a local file. When the user enters a search word, the program displays matching notes. This helps the learner find earlier notes without reading every saved entry manually.</p></div>
-        <p><strong>代码依据：</strong><code>input()</code> 接收正文/关键词；<code>save_entry(text)</code> 写文件；搜索用 <code>casefold()</code> 忽略大小写；<code>show_entries</code> 输出编号、时间、正文。若题目只问某一项，就聚焦该项，不必把所有功能重写一遍。</p>
+        <div class="card"><p><strong>英文示例：</strong>My program helps a learner save and retrieve short practice notes. It displays the saved notes before the menu and refreshes the list after each operation. The user enters a note through the terminal, and the program stores its text with a timestamp in a local file. When the user enters a search word, the program displays matching notes. This helps the learner find earlier notes without reading every saved entry manually.</p></div>
+        <p><strong>代码依据：</strong><code>input()</code> 接收正文/关键词/编号；<code>save_entry(text)</code> 写文件；搜索用 <code>casefold()</code> 忽略大小写；<code>show_entries</code> 输出编号、时间、正文。若题目只问某一项，就聚焦该项，不必把所有功能重写一遍。</p>
 
         <h3>WR2(a) · Algorithm Development</h3>
         <p><strong>练习方向：</strong>解释 <code>show_entries(entries)</code> 的算法，并追踪迭代次数。假定传入两条有效记录，正文依次为 <code>Learn Python</code> 和 <code>Read a book</code>。</p>
-        <div class="card"><p><strong>英文示例：</strong>The procedure first checks whether entries is empty. If it is empty, it prints a message and returns. Otherwise, the for loop visits each entry once. With two entries, the loop body executes twice. On each iteration, it prints the entry number, timestamp, and text, in the original list order.</p></div>
-        <p><strong>说明原因：</strong>空列表会提前返回，循环执行 0 次；非空且记录结构有效时，循环体执行 <code>len(entries)</code> 次。参数换成另一组记录，输出也会改变。若问无限循环，须针对自己的循环解释：当前 <code>for</code> 遍历有限且未被追加的列表会结束；假设把它改成没有退出条件的 <code>while True</code>，才会无限重复。不要把菜单中持续等待用户输入与这个列表循环混为一谈。</p>
+        <div class="card"><p><strong>英文示例：</strong>When indices is omitted, the procedure builds the positions of all entries. It checks whether this position list is empty; if so, it prints the empty message and returns. Otherwise, the for loop visits each selected position and retrieves its entry. With two entries, the loop body executes twice. On each iteration, it prints the entry number, timestamp, and text, in the original list order.</p></div>
+        <p><strong>说明原因：</strong>省略 <code>indices</code> 时，过程生成全部位置，循环体执行 <code>len(entries)</code> 次；传入筛选位置时，执行 <code>len(indices)</code> 次。位置列表为空就提前返回，循环执行 0 次。参数换成另一组记录或位置，输出也会改变。若问无限循环，须针对自己的循环解释：当前 <code>for</code> 遍历有限且未被追加的列表会结束；假设把它改成没有退出条件的 <code>while True</code>，才会无限重复。不要把菜单中持续等待用户输入与这个列表循环混为一谈。</p>
 
         <h3>WR2(b) · Errors and Testing</h3>
         <p><strong>练习方向：</strong>给出测试输入、预期结果以及它验证的行为。测试前提：使用一个只含下面两条虚构记录的练习数据文件。</p>
         <table>
           <thead><tr><th>测试输入 / 调用</th><th>预期结果</th><th>验证什么</th></tr></thead>
           <tbody>
-            <tr><td>保存 Learn Python、Read a book；搜索 python</td><td>只显示 Learn Python 对应的记录</td><td>大小写归一化和匹配分支</td></tr>
+            <tr><td>保存 Learn Python、Read a book；搜索 python</td><td>Search results 区域只显示 Learn Python；按 Enter 返回完整列表</td><td>大小写归一化和匹配分支</td></tr>
             <tr><td>搜索 ocean</td><td>No matching entries.</td><td>无匹配时的空列表路径</td></tr>
-            <tr><td>搜索只输入空格</td><td>Enter a search word.</td><td>输入检查；此时不会调用显示过程</td></tr>
-            <tr><td>直接调用 show_entries([])</td><td>No matching entries.；随后返回</td><td>选定过程的空列表分支</td></tr>
+            <tr><td>搜索只输入空格</td><td>Search cancelled.</td><td>输入检查；此时不会调用显示过程</td></tr>
+            <tr><td>直接调用 show_entries([])</td><td>No entries yet. Add one to begin.；随后返回</td><td>选定过程的空列表分支</td></tr>
           </tbody>
         </table>
-        <div class="card"><p><strong>英文示例：</strong>With the two saved notes “Learn Python” and “Read a book”, I would search for “python”. I expect only the first note to be displayed because both the search term and each note are case-folded before the substring comparison. This checks that capitalization does not prevent a match.</p></div>
+        <div class="card"><p><strong>英文示例：</strong>With the two saved notes “Learn Python” and “Read a book”, I would search for “python”. I expect only the first note in the search results because both the search term and each note are case-folded before the substring comparison. This checks that capitalization does not prevent a match.</p></div>
         <p><strong>如果题目问错误：</strong>把 <code>entry["text"]</code> 误改为 <code>entry["body"]</code>，在显示现有的非空记录时会产生 <code>KeyError</code>，因为记录只有 <code>created_at</code> 和 <code>text</code> 键；恢复正确键名可修复。空列表会提前返回，不能触发这个错误。若题目要求“过程的测试调用”，应直接给 <code>show_entries</code> 的具体参数及结果，而不只写菜单操作。</p>
 
         <h3>WR2(c) · Data and Procedural Abstraction</h3>
         <p><strong>练习方向：</strong>指出具体列表、元素内容，以及它如何管理复杂度；再说明参数化过程如何减少重复。</p>
-        <div class="card"><p><strong>英文示例：</strong>The matches list stores the diary records that satisfy the search condition. Each record contains a timestamp and text. A single loop can display any number of matching records. Without this list, using a separate variable and display statement for each match would require code changes as the number of matches grows. The show_entries(entries) procedure also lets List and Search share the same display logic; a change to the output format can be made in one place.</p></div>
+        <div class="card"><p><strong>英文示例：</strong>The entries list stores diary records containing a timestamp and text. The indices list stores the original positions of matching records. A single loop can display any number of results, and indices maps each result number back to the correct record for viewing, editing, or deletion. Without this list, storing a separate position and selection branch for each match would require code changes as the number of matches grows. The show_entries procedure lets the operation-center list and Search share the same display logic; a change to the output format can be made in one place.</p></div>
         <p><strong>如果题目要求新算法：</strong>例如统计正文恰好等于目标值的记录：先把计数设为 0；逐条遍历列表；比较当前记录的 <code>text</code> 与目标值，相等就加 1；遍历结束后返回计数。若题目提供比较过程，就按其规格调用；不能把“正文完全相等”偷换成原程序的“包含关键词”。这是一种算法描述练习，不是现有程序已实现的功能。</p>
 
         <h3>交卷前自查</h3>

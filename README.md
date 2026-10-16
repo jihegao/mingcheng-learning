@@ -29,7 +29,7 @@ npm run preview:rocket   # http://localhost:4174
 npm run preview:apcsp    # http://localhost:4175
 ```
 
-`npm test` 校验公开文件清单、站内链接、JavaScript 语法和 Rocket 物理模型测试。`npm run build` 按明确清单构建 Rocket 的 23 个公开资源。MC 与 AP CSP 直接使用各自的 `site/` 目录。
+`npm test` 校验公开文件清单、站内链接、JavaScript 语法、Rocket 物理模型和日记程序的隔离数据测试（含教程代码示例）。`npm run build` 按明确清单构建 Rocket 的 23 个公开资源。MC 与 AP CSP 直接使用各自的 `site/` 目录。
 
 预览保留线上链接和原有 API 地址。生产作业服务只接受指定教学域名的上传；本地预览不提供上传权限。独立运行该服务需要单独配置私有 R2、限速 KV 和允许的来源，见[部署说明](docs/deployment.md)。
 

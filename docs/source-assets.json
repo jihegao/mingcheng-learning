@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T04:42:13.626Z",
+  "generatedAt": "2026-10-16T09:30:35.503Z",
   "scope": "Repository static-source snapshot. This manifest alone does not assert live HTTP parity. No student records or attachments included.",
   "assets": [
     {
@@ -203,14 +203,14 @@
     {
       "path": "sites/apcsp/site/practice/cli-diary/index.html",
       "url": "https://apcsp.gaojihe.cn/practice/cli-diary/",
-      "sha256": "bf29865713a9dc4cf6f0bb2fc6106cf8d8c13c1923a187bd81154f61a79c149e",
-      "bytes": 11542
+      "sha256": "ceb1875f4cfe9069852375017615188fd07826aea540f59520e5556a12777eb6",
+      "bytes": 28711
     },
     {
       "path": "sites/apcsp/site/practice/cli-diary/diary.py",
       "url": "https://apcsp.gaojihe.cn/practice/cli-diary/diary.py",
-      "sha256": "d750c906018aaf8d63c6b73c0c3ed599a27e8941d1dc3f4ed2cffe177fcc2a3f",
-      "bytes": 1928
+      "sha256": "b60afe8b45faf23e8b94e3fe1421a227295d2a0b477e6c747c75464cdfefdc80",
+      "bytes": 4370
     },
     {
       "path": "sites/apcsp/site/data/W09_博客文章_清洗前.csv",
