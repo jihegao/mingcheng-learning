@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#071427" />
+  <meta name="description" content="第三期火箭课程：探索地月系统，手动控制飞船，并尝试进入绕月轨道。" />
+  <title>地月航行实验室 · 火箭课程第三期</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script type="module" src="./main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><span class="brand-symbol" aria-hidden="true">◌</span><div><strong>ROCKET LAB</strong><small>第三期 · 地月航行</small></div></div>
+    <nav aria-label="页面导航"><a href="./reading/">英文阅读材料 ↗</a><a href="https://rocket.gaojihe.cn/">返回课程目录 ↗</a></nav>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">PHASE 03 / EARTH–MOON MISSION</p><h1 id="page-title">从绕地飞行，<br /><em>走向月球。</em></h1><p>月球也在移动。你需要观察地月系统，亲手控制点火方向与时机，再用速度和轨道数据解释一次飞越或绕月捕获。</p></div>
+      <div class="intro-note"><span>本课关键问题</span><p>为什么“朝着月球现在的位置飞”并不一定能遇见它？</p></div>
+    </section>
+
+    <section class="stage-layout" aria-label="分阶段任务">
+      <div class="stage-tabs" role="tablist" aria-label="课程阶段">
+        <button class="stage-tab active" type="button" data-phase="1" role="tab" aria-selected="true"><span>01</span><strong>认识地月系统</strong><small>观察月球公转与尺度</small></button>
+        <button class="stage-tab" type="button" data-phase="2" role="tab" aria-selected="false"><span>02</span><strong>手动控制火箭</strong><small>选择方向与点火时机</small></button>
+        <button class="stage-tab" type="button" data-phase="3" role="tab" aria-selected="false"><span>03</span><strong>探索绕月轨道</strong><small>近月减速，尝试捕获</small></button>
+      </div>
+      <article class="stage-explainer" aria-live="polite"><p class="eyebrow" id="phase-kicker">STAGE 01 · OBSERVE</p><h2 id="phase-title">月球不会停下来等你。</h2><p id="phase-description">先观察月球绕地球运动。记录它一天后的新位置，再猜想火箭经过几天飞行后，该朝哪里出发。</p><div class="objective"><span>本阶段目标</span><p id="phase-objective">让模拟时间前进至少 1 天，指出月球的位置变化。</p></div></article>
+    </section>
+
+    <section class="lab" aria-label="互动地月实验室">
+      <div class="lab-head"><div><p class="eyebrow">LIVE SIMULATION</p><h2>任务控制台</h2></div><div class="lab-state" id="mission-state" role="status" aria-live="polite">准备开始观察</div></div>
+      <div class="lab-grid">
+        <div class="map-panel">
+          <div class="map-toolbar"><span id="view-label">地月全览 · 地球居中</span><button type="button" id="view-button">切换近月视图</button></div>
+          <canvas id="space-map" width="1100" height="700" role="img" aria-label="地月系统二维地图，显示地球、绕地运动的月球、飞船和飞行轨迹"></canvas>
+          <div class="map-legend"><span><i class="earth-dot"></i>地球</span><span><i class="moon-dot"></i>月球</span><span><i class="path-dot"></i>已飞轨迹</span></div>
+        </div>
+        <aside class="control-panel" aria-label="飞船控制与数据">
+          <div class="data-title"><span>MISSION TELEMETRY</span><strong>实时数据</strong></div>
+          <div class="readouts"><div><span>模拟时间</span><strong id="time-value">0 天 0 小时</strong></div><div><span>距月球表面</span><strong id="moon-distance">—</strong></div><div><span>相对月球速度</span><strong id="moon-speed">—</strong></div><div><span>剩余变速能力 Δv</span><strong id="fuel-value">—</strong></div><div><span>绕月近点 / 远点</span><strong id="orbit-value">—</strong></div></div>
+          <p class="data-note">近点、远点是按当前相对月球的位置和速度作出的瞬时二体估算；月球与地球同时施加引力，未来轨迹可能变化。</p>
+          <div class="control-group"><strong>飞行操作</strong><div class="primary-controls"><button type="button" id="play-button">▶ 开始</button><button type="button" id="reset-button">↺ 重置</button></div><div class="steer-controls"><button type="button" data-hold="left" aria-label="向左旋转飞船">↶ 左转</button><button type="button" data-hold="burn" class="burn-button" aria-label="按住点火">▲ 按住点火</button><button type="button" data-hold="right" aria-label="向右旋转飞船">右转 ↷</button></div><div class="direction-controls"><button type="button" id="prograde-button" aria-pressed="false">锁定顺行</button><button type="button" id="retrograde-button" aria-pressed="false">锁定逆行</button></div></div>
+          <div class="warp-control"><label for="warp-select">滑行时加速时间</label><select id="warp-select"><option value="1">每秒 1 小时</option><option value="6" selected>每秒 6 小时</option><option value="12">每秒 12 小时</option></select></div>
+          <p class="keyboard-help">键盘：← / → 转向，按住空格点火，P 暂停，R 重置，V 切视图。方向锁定只辅助转向；点火时间仍由你控制。手动转向会解除锁定，点火时会自动慢放。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="reflection" aria-labelledby="reflection-title"><div><p class="eyebrow">EXPLAIN YOUR RESULT</p><h2 id="reflection-title">留下你的飞行证据</h2><p>记录点火方向、点火前后速度、最近月球距离，解释为什么轨迹发生变化。失败轨迹也可以成为有价值的证据。</p></div><a href="./reading/">进入阅读与任务单 <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer><span>地月航行实验室 · 科学与工程</span><p>教学模型：二维、地球固定、月球匀速圆周公转；天体图形为便于观察而放大。不可用于真实任务设计。</p></footer>
+</body>
+</html>

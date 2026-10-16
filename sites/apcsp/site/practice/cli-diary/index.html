@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A step-by-step Python tutorial: build a local command-line diary from an empty file.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <title>Build a CLI Diary from Zero | AP CSP Code Practice</title>
+</head>
+<body>
+  <header>
+    <a class="brand" href="/">AP CSP · Mingcheng</a>
+    <div class="eyebrow">Code practice · guided Python build</div>
+    <h1>Build a CLI diary from zero</h1>
+    <p>Start with an empty Python file. Make a menu, add and list entries, save them between runs, and finally search them. Each step gives you a small behavior to test before you continue.</p>
+  </header>
+  <main>
+    <a class="back" href="/">← Back to all handouts and practice</a>
+    <div class="notice"><strong>Use fictional entries in class.</strong> The finished program writes readable text to your own computer. It is not encrypted. Do not enter passwords, private student information, or real personal stories; do not upload the saved file to AI tools, CodeHS, or a public repository.</div>
+
+    <article>
+      <section id="plan">
+        <h2>0. Decide what the first version must do</h2>
+        <p>A command-line interface (CLI) uses the terminal for input and output. Our smallest useful diary needs four choices:</p>
+        <table>
+          <thead><tr><th>Choice</th><th>Input</th><th>Program action</th><th>Output</th></tr></thead>
+          <tbody>
+            <tr><td>Add</td><td>One line of fictional text</td><td>Reject blank text; save a record</td><td>A saved message</td></tr>
+            <tr><td>List</td><td>No extra input</td><td>Read saved records</td><td>Numbered entries</td></tr>
+            <tr><td>Search</td><td>A word</td><td>Keep records containing that word</td><td>Matches or “no match”</td></tr>
+            <tr><td>Quit</td><td>No extra input</td><td>Stop the menu loop</td><td>A goodbye message</td></tr>
+          </tbody>
+        </table>
+        <p>We will first make Add and List work only while the program is running. Losing the entries on restart will show why a file is needed.</p>
+      </section>
+
+      <section id="setup">
+        <h2>1. Create an empty Python file</h2>
+        <p>Make a folder for this exercise and create a blank file named <code>diary.py</code> in it. Use a local terminal with Python 3.9 or newer. From that folder, run:</p>
+        <pre>python3 diary.py</pre>
+        <p>An empty file exits without printing anything. That is your starting point. On Windows, use <code>py diary.py</code> if <code>python3</code> is unavailable.</p>
+      </section>
+
+      <section id="menu">
+        <h2>2. Build the menu loop</h2>
+        <p>Type this into <code>diary.py</code>. Each <code>if</code> branch is a placeholder for one future feature.</p>
+        <pre id="stage-menu">while True:
+    print("\nCLI Diary: 1 Add | 2 List | 3 Search | 4 Quit")
+    choice = input("Choose 1–4: ").strip()
+    if choice == "1":
+        print("Add comes next.")
+    elif choice == "2":
+        print("List comes next.")
+    elif choice == "3":
+        print("Search comes next.")
+    elif choice == "4":
+        print("Goodbye.")
+        break
+    else:
+        print("Choose 1, 2, 3, or 4.")</pre>
+        <p><code>input()</code> waits for the user. <code>strip()</code> removes surrounding spaces. <code>while True</code> keeps showing the menu, and <code>break</code> stops it when the user chooses Quit.</p>
+        <div class="card"><h3>Checkpoint A</h3><p>Run the file. Try <code>1</code>, an invalid choice, and <code>4</code>. Explain why the menu reappears after the first two choices but not after Quit.</p></div>
+      </section>
+
+      <section id="memory">
+        <h2>3. Add and list entries in memory</h2>
+        <p>Put <code>entries = []</code> above <code>while True</code>. Replace only the Add and List branches with the code below; keep Search, Quit, and the invalid-choice branch.</p>
+        <pre id="stage-memory">if choice == "1":
+    text = input("Write one fictional entry: ").strip()
+    if text:
+        entries.append(text)
+        print("Entry added.")
+    else:
+        print("Nothing was added.")
+elif choice == "2":
+    if entries:
+        for number, text in enumerate(entries, start=1):
+            print(f"{number}. {text}")
+    else:
+        print("No entries yet.")</pre>
+        <p>The list is the first data structure. <code>append()</code> adds one item; the <code>for</code> loop displays every item. Add two fictional sentences and list them. Then quit and restart: the list is empty because it existed only in memory.</p>
+        <div class="card"><h3>Checkpoint B</h3><p>Predict the output before testing: What happens if you choose Add and press Enter without typing text? What happens to the two entries after a restart?</p></div>
+      </section>
+
+      <section id="storage">
+        <h2>4. Give each entry a time and save it to a file</h2>
+        <p>Now one entry should be a dictionary with two fields: <code>text</code> is the content, and <code>created_at</code> describes when that content was added. Put these imports, paths, and helper functions above the menu loop:</p>
+        <pre id="stage-storage">import json
+from datetime import datetime
+from pathlib import Path
+
+DATA_DIR = Path.home() / ".csp-diary"
+DATA_FILE = DATA_DIR / "entries.jsonl"
+
+def save_entry(text):
+    entry = {
+        "created_at": datetime.now().astimezone().isoformat(timespec="minutes"),
+        "text": text,
+    }
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    with DATA_FILE.open("a", encoding="utf-8") as file:
+        file.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+def load_entries():
+    if not DATA_FILE.exists():
+        return []
+    with DATA_FILE.open("r", encoding="utf-8") as file:
+        return [json.loads(line) for line in file if line.strip()]</pre>
+        <p>Remove <code>entries = []</code>. In Add, replace <code>entries.append(text)</code> with <code>save_entry(text)</code>. Replace the List branch with:</p>
+        <pre id="stage-list">elif choice == "2":
+    entries = load_entries()
+    if entries:
+        for number, entry in enumerate(entries, start=1):
+            print(f'{number}. [{entry["created_at"]}] {entry["text"]}')
+    else:
+        print("No entries yet.")</pre>
+        <p><code>Path.home()</code> keeps the data outside this website and your practice folder. File mode <code>"a"</code> appends a line without replacing older lines. <code>json.dumps()</code> turns a dictionary into text; <code>json.loads()</code> turns that text back into a dictionary. One JSON object per line is called JSON Lines.</p>
+        <pre>{"created_at":"2026-09-29T10:30+08:00","text":"Today I compared two data sets."}</pre>
+        <p>The time stamp is <strong>metadata</strong>: it describes the diary entry. It is useful for organizing entries, but it is not the entry's text.</p>
+        <div class="card"><h3>Checkpoint C</h3><p>Add a fictional entry, quit, restart, and choose List. The entry should still appear. Find the exact data path by reading <code>DATA_DIR</code> and <code>DATA_FILE</code>; do not copy the saved file into the website folder.</p></div>
+      </section>
+
+      <section id="search">
+        <h2>5. Add a case-insensitive search</h2>
+        <p>Replace the Search placeholder with this branch. It reads the file, keeps matching records, and displays them.</p>
+        <pre id="stage-search">elif choice == "3":
+    term = input("Search word: ").strip().casefold()
+    if not term:
+        print("Enter a search word.")
+    else:
+        matches = [
+            entry for entry in load_entries()
+            if term in entry["text"].casefold()
+        ]
+        if matches:
+            for number, entry in enumerate(matches, start=1):
+                print(f'{number}. [{entry["created_at"]}] {entry["text"]}')
+        else:
+            print("No matching entries.")</pre>
+        <p><code>casefold()</code> makes ordinary letter-case differences irrelevant to this search. The list comprehension is a filter: it builds a new list containing only the entries that meet the condition.</p>
+        <div class="card"><h3>Checkpoint D</h3><p>Save an entry containing <code>Python</code>. Search for <code>python</code>, then for a word that is absent, then press Enter at the search prompt. Explain all three results.</p></div>
+      </section>
+
+      <section id="refactor">
+        <h2>6. Refactor after the behavior works</h2>
+        <p>The Add and Search branches are getting long, and List and Search repeat the same display loop. Give those tasks names: <code>add_entry()</code>, <code>search_entries()</code>, and <code>show_entries(entries)</code>. Put the menu in <code>main()</code>, then call <code>main()</code> at the bottom of the file. The behavior stays the same; the code becomes easier to read and change.</p>
+        <p>After you have tried the steps yourself, compare your program with the <a href="diary.py">complete reference implementation</a>. It uses these functions and keeps the same local JSON Lines file.</p>
+        <p><a class="button" href="diary.py" download>Download the complete reference code</a></p>
+      </section>
+
+      <section id="test">
+        <h2>7. Test the program as a user would</h2>
+        <table>
+          <thead><tr><th>Test</th><th>Expected observation</th></tr></thead>
+          <tbody>
+            <tr><td>Add only spaces.</td><td>No new record is saved.</td></tr>
+            <tr><td>Add two fictional sentences, quit, restart, then List.</td><td>Both sentences remain in order.</td></tr>
+            <tr><td>Search with different capitalization.</td><td>The matching entry appears.</td></tr>
+            <tr><td>Search for an absent word or submit a blank search.</td><td>A clear message appears; the program keeps running.</td></tr>
+            <tr><td>Add a fictional sentence in Chinese, then restart.</td><td>The characters remain readable.</td></tr>
+          </tbody>
+        </table>
+        <p>If the saved file is manually damaged, this beginner version can fail while loading it. A later improvement is to report a malformed line without silently inventing or deleting data.</p>
+      </section>
+
+      <section id="extend">
+        <h2>Make one change of your own</h2>
+        <ol>
+          <li><strong>Starter:</strong> Show newest entries first without changing their order in the saved file.</li>
+          <li><strong>Core:</strong> Make Search print how many entries matched.</li>
+          <li><strong>Challenge:</strong> Add a <code>tag</code> field and search by tag. Decide what to do with older entries that have no tag.</li>
+        </ol>
+        <h2>Independent checkpoint</h2>
+        <p>Close AI assistance. Demonstrate one successful run and explain one input, one processing step, one output, why the time stamp is metadata, and one privacy limit of a plain-text file. Submit your code, fictional test output, and explanation. Do not submit the saved diary file.</p>
+      </section>
+    </article>
+    <p class="source">Classroom connection: AP CSP Course and Exam Description, Effective Fall 2023, Topic 2.3 (data and metadata), PDF pages 58–60; Topic 2.4 (filtering data with programs), PDF pages 61–62. This is an original coding exercise, not an official AP question or the Create performance task.</p>
+  </main>
+  <footer>AP CSP code practice · Python only · fictional classroom data</footer>
+</body>
+</html>

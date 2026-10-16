@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>阶段 2 · 参数实验</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="lab-page">
+    <header class="topbar">
+      <a class="brand" href="../">火箭降落实验室 <small>ROCKET LAB</small></a>
+      <nav class="stage-switch" aria-label="学习阶段">
+        <a href="../stage1/">阶段 1</a>
+        <a href="./" aria-current="page">阶段 2</a>
+      </nav>
+    </header>
+
+    <main class="lab-shell">
+      <section class="flight-deck" aria-label="实验画面">
+        <div class="canvas-wrap">
+          <canvas id="game" aria-label="带参数的火箭降落实验"></canvas>
+          <div class="hud" aria-live="polite">
+            <div class="hud-group">
+              <div class="hud-chip"><span>高度</span><strong id="altitude">92.0 m</strong></div>
+              <div class="hud-chip"><span>瞬时速度</span><strong id="speed">4.7 m/s</strong></div>
+              <div class="hud-chip"><span>燃料</span><strong id="fuel">100%</strong></div>
+            </div>
+          </div>
+          <div class="game-message" id="message">
+            <span class="message-label">MISSION 02</span>
+            <h2 id="message-title">设定参数，再开始实验</h2>
+            <p id="message-body">比较不同重力和推力下，速度怎样变化。每次只改一个变量。</p>
+            <button class="primary-button" id="start">开始实验</button>
+          </div>
+        </div>
+        <div class="control-strip">
+          <div class="control-help"><span class="key">A</span><span class="key">D</span> 姿态　<span class="key">W</span> / <span class="key">↑</span> / <span class="key">Space</span> 点火</div>
+          <div class="touch-controls" aria-label="触控操作">
+            <button class="touch-button" id="left" aria-label="向左旋转">↶</button>
+            <button class="touch-button touch-button--thrust" id="thrust">点火</button>
+            <button class="touch-button" id="right" aria-label="向右旋转">↷</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <span class="panel-label">STAGE 02 · MEASURE</span>
+        <h1>参数实验台</h1>
+        <p>先设置输入，再比较输出。参数在下一次开始/重置时生效。</p>
+        <div class="divider"></div>
+        <form class="experiment-form" id="parameters">
+          <div class="field">
+            <label for="gravity-range"><span>重力加速度</span><strong>m/s²</strong></label>
+            <div class="range-row">
+              <input id="gravity-range" type="range" min="0.5" max="12" step="0.01" value="1.62" />
+              <input id="gravity" type="number" min="0.5" max="12" step="0.01" value="1.62" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="thrust-range"><span>最大推力加速度</span><strong>m/s²</strong></label>
+            <div class="range-row">
+              <input id="thrust-range" type="range" min="1" max="18" step="0.1" value="5.5" />
+              <input id="thrust-acceleration" type="number" min="1" max="18" step="0.1" value="5.5" />
+            </div>
+          </div>
+          <button class="apply-button" type="submit">应用参数并重置</button>
+        </form>
+        <div class="divider"></div>
+        <div class="telemetry-grid" aria-label="实时输出">
+          <div class="telemetry-item"><span>水平速度 vx</span><strong id="vx">4.20 m/s</strong></div>
+          <div class="telemetry-item"><span>垂直速度 vy</span><strong id="vy">−2.20 m/s</strong></div>
+          <div class="telemetry-item"><span>倾角</span><strong id="angle">0.0°</strong></div>
+          <div class="telemetry-item"><span>推力状态</span><strong id="throttle">0%</strong></div>
+          <div class="telemetry-item telemetry-item--wide"><span>接地速度</span><strong id="touchdown-speed">等待接地</strong></div>
+        </div>
+        <p class="model-note">本模型忽略空气阻力、质量变化与轨道运动；“推力”在这里用加速度表示。</p>
+      </aside>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

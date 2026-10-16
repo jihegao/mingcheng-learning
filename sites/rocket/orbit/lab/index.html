@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#040915" />
+    <meta name="description" content="Build a simplified multistage rocket, steer it by hand, and draw a closed orbit around a centered 2D Earth." />
+    <title>Orbit Workshop · Build, Launch, Steer</title>
+    <link rel="stylesheet" href="../../styles.css" />
+  </head>
+  <body class="orbit-game-page">
+    <header class="game-topbar">
+      <a href="../"><span>02</span><b>ORBIT WORKSHOP<small>BUILD · LAUNCH · STEER</small></b></a>
+      <div class="game-objective"><i></i><span>MISSION</span><strong>Close the path above 70 km</strong></div>
+      <nav><a href="../reading/">Field guide</a><a href="../../">Phase 1</a></nav>
+    </header>
+    <main class="game-shell">
+      <section class="game-intro">
+        <div><small>MISSION 02 · MANUAL ORBIT</small><h1>Build it. Turn it. <em>Make the path close.</em></h1></div>
+        <p>Earth stays fixed at the center. You control the rocket—not a preset pitch program. The solid line is where you flew; the dashed line predicts where gravity will take you.</p>
+      </section>
+      <section class="game-grid">
+        <aside class="vehicle-bay">
+          <header><div><small>VEHICLE ASSEMBLY</small><h2>Two-stage stack</h2></div><span class="inspiration-tag">SIMPLIFIED</span></header>
+          <div class="rocket-blueprint" id="rocket-blueprint" aria-label="Current two-stage rocket design">
+            <div class="payload-shape"><span>PAYLOAD</span></div>
+            <div class="upper-shape"><span>STAGE 2</span><i></i></div>
+            <div class="decoupler-shape">SEPARATOR</div>
+            <div class="booster-shape"><span>STAGE 1</span><i></i></div>
+          </div>
+          <form id="design-form">
+            <label class="builder-field"><span>Payload <b id="payload-output">6 t</b></span><input id="payload" type="range" min="2" max="20" step="1" value="6" /></label>
+            <div class="builder-group"><div><small>STAGE 2 · ORBIT</small><strong>Upper stage</strong></div><label>Fuel tanks<select id="upper-tanks"><option value="1">1 tank · 20 t</option><option value="2">2 tanks · 40 t</option><option value="3">3 tanks · 60 t</option></select></label><label>Engine<select id="upper-engine"><option value="light">Vac-06 · light</option><option value="medium" selected>Vac-10 · medium</option><option value="heavy">Vac-15 · heavy</option></select></label></div>
+            <div class="builder-group booster"><div><small>STAGE 1 · LAUNCH</small><strong>Booster</strong></div><label>Fuel tanks<select id="booster-tanks"><option value="1">1 tank · 45 t</option><option value="2" selected>2 tanks · 90 t</option><option value="3">3 tanks · 135 t</option><option value="4">4 tanks · 180 t</option></select></label><label>Engine<select id="booster-engine"><option value="light">Swift-24 · light</option><option value="medium" selected>Atlas-40 · medium</option><option value="heavy">Titan-60 · heavy</option></select></label></div>
+          </form>
+          <div class="design-stats"><div><span>Launch mass</span><b id="design-mass">—</b></div><div><span>Launch TWR</span><b id="design-twr">—</b></div><div><span>Stage 1 Δv</span><b id="design-dv1">—</b></div><div><span>Stage 2 Δv</span><b id="design-dv2">—</b></div></div>
+          <div class="staging-stack"><small>STAGING ORDER</small><div><b>02</b><span>Upper engine</span></div><div><b>01</b><span>Drop booster + ignite upper stage</span></div></div>
+          <button class="rollout-button" id="rollout" type="button">Roll out to launchpad →</button>
+        </aside>
+        <section class="map-console">
+          <div class="map-toolbar"><div><small>ORBIT MAP</small><strong id="flight-status">Vehicle ready</strong></div><div class="map-key"><span><i class="actual"></i>actual path</span><span><i class="prediction"></i>predicted path</span><span><i class="air"></i>atmosphere</span></div></div>
+          <div class="map-stage">
+            <canvas id="flight-canvas" width="900" height="760" aria-label="Centered 2D Earth, rocket, actual trajectory, and predicted orbit"></canvas>
+            <div class="map-callout" id="map-callout"><small>FLIGHT DIRECTOR</small><strong>Build your vehicle</strong><p>Check TWR and Δv, then roll out.</p></div>
+            <div class="heading-gauge"><small>PITCH FROM LOCAL VERTICAL</small><strong id="pitch-value">0°</strong><div><i id="heading-needle"></i></div></div>
+            <div class="warp-control"><small>SIM SPEED</small><button data-warp="1">1×</button><button class="selected" data-warp="6">6×</button><button data-warp="20">20×</button></div>
+          </div>
+          <div class="flight-controls">
+            <button class="steer" id="turn-left" type="button"><kbd>A</kbd><span>TURN LEFT</span></button>
+            <button class="engine" id="engine-toggle" type="button"><kbd>W</kbd><span>ENGINE OFF</span></button>
+            <button class="steer" id="turn-right" type="button"><kbd>D</kbd><span>TURN RIGHT</span></button>
+            <button class="stage-command" id="stage-command" type="button"><kbd>SPACE</kbd><span>STAGE</span></button>
+          </div>
+          <div class="control-note"><span><b>Goal:</b> first climb above the atmosphere, then turn toward the horizon to build sideways speed.</span><button id="pause" type="button">Pause</button><button id="reset-flight" type="button">Reset flight</button></div>
+        </section>
+        <aside class="telemetry-bay">
+          <header><small>LIVE TELEMETRY</small><span id="mission-time">T+000.0</span></header>
+          <div class="primary-readout"><span>ALTITUDE</span><strong id="altitude">0.0 km</strong><i id="atmosphere-state">IN ATMOSPHERE</i></div>
+          <div class="velocity-readout"><div><span>SPEED</span><b id="speed">0.00 km/s</b></div><div><span>SIDEWAYS</span><b id="tangent-speed">0.00 km/s</b></div></div>
+          <div class="orbit-readout"><small>PREDICTED ORBIT</small><div><span>APOGEE</span><b id="apogee">—</b></div><div><span>PERIGEE</span><b id="perigee">—</b></div><p id="orbit-verdict">The predicted path intersects Earth.</p></div>
+          <div class="resource-readout"><div><span id="active-stage">STAGE 1 FUEL</span><b id="fuel-percent">100%</b></div><div class="fuel-bar"><i id="fuel-fill"></i></div><div class="resource-meta"><span>Mass <b id="flight-mass">—</b></span><span>Max-Q <b id="max-q">0 kPa</b></span></div></div>
+          <div class="flight-log"><small>MISSION EVENTS</small><ol id="flight-log"><li><b>T+0</b>Vehicle in assembly</li></ol></div>
+          <section class="success-rules"><small>ORBIT CHECK</small><p><i></i> Perigee ≥ 70 km</p><p><i></i> Closed predicted path</p><p><i></i> Vehicle remains intact</p></section>
+        </aside>
+      </section>
+      <section class="debrief-strip"><div><small>WHY THIS FEELS LIKE A SPACE PROGRAM</small><h2>Design decisions continue into flight.</h2></div><p>More tanks add fuel and mass. Larger engines add thrust and dry mass. Staging removes empty hardware. Manual steering decides whether your energy becomes altitude or sideways speed.</p><a href="../reading/">Read the engineering explanation →</a></section>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

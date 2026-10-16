@@ -1,0 +1,25 @@
+post_id,title,category,tags,published_day,views,likes,comments,read_minutes,featured,language
+B01, Python Tips: Clean CSV Files ,Tech,python|data|csv,Mon,1250,148,19,4,YES,en
+B02,用 Python 做每周预算,Life,python|money|beginner,Tue,980,121,14,5, no ,zh
+B03,Five Debugging Habits,tech,python|debug|tips,Wed,1430,176,26,6,yes,en
+B04,城市散步路线,Travel,city|walk|photo,Thu,870,92,11,3,no,zh
+B05,Understanding List Slices,Tech,python|list|beginner,Fri,1100,139,18,5,yes,en
+B06,一周阅读清单,Life,books | review | habits,Mon,760,88,9,4,no,zh
+B07,Data Notes: Small Samples,Data,data|statistics|bias,Tue,n/a,130,21,7,yes,en
+B08,周末咖啡店观察,life,coffee|city|notes,Wed,690,73,8,3,no,zh
+B09,Building a Simple Chart,DATA,python|data|visual,Tue,1580,204,31,6,yes,en
+B10,旅行照片整理,Travel,photo|travel|workflow,Thu,1020,110,16,4,no,zh
+B11,Start Here: Variables,Tech,python|beginner|variables,Fri,1340,190,29,5,YES,en
+B12,如何写清楚的标题,Life,writing|title|tips,Mon,840,105,12,4,no,zh
+B13,AP CSP Data Vocabulary,Data,data|metadata|csp,Tue,1210,167,23,6,yes,en
+B14,Small Garden Journal,Life,garden|notes|weekend,Wed,560,61,7,3,no,en
+B15,Python String Toolkit, Tech ,python|strings|tips,Thu,1510,215,35,7,yes,en
+B16,雨天通勤记录,Life,city|rain|notes,Fri,720,79,10,4,no,zh
+B17,When Averages Mislead,Data,data|average|bias,Mon,1390,181,28,6,yes,en
+B18,照片文件命名法,Tech,workflow|photo|strings,Tue,900,97,13,5,no,zh
+B19,Weekend Recipe Test,Life,food|recipe|notes,Wed,650,70,9,4,no,en
+B20,Reading CSV Without Libraries,tech,python|csv|data,Thu,1470,198,32,6,yes,en
+B21,城市展览速览,Travel,city|art|weekend,Fri,780,86,10,3,no,zh
+B22,Metadata Matters,Data,data|metadata|search,Mon,1280,172,25,5,yes,en
+B23,Python Tips: Clean CSV Files,Tech,python|data|csv,Mon,1250,148,19,4,yes,en
+B24,Empty Views Example,Data,data|test,Thu,,30,4,3,no,en

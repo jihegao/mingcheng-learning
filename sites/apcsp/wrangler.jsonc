@@ -1,0 +1,16 @@
+{
+  "name": "apcsp-teaching-materials",
+  "compatibility_date": "2026-09-21",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./site",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    {
+      "pattern": "apcsp.gaojihe.cn",
+      "custom_domain": true
+    }
+  ]
+}

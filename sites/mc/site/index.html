@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="课程列表、作业提交与已提交记录。" />
+    <title>课程与作业</title>
+    <style>
+      * { box-sizing: border-box; }
+      :root { color-scheme: light; }
+      body { min-width: 320px; min-height: 100vh; margin: 0; background: #f7f9f8; color: #172234; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.6; }
+      main { width: min(980px, calc(100% - 40px)); margin: 76px auto; }
+      .page-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 38px; }
+      .page-head h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -.04em; }
+      .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+      .record-link { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 11px 22px; border: 1px solid #cbd9d4; border-radius: 999px; background: #fff; color: #146b62; text-decoration: none; font-weight: 700; }
+      .record-link:hover { background: #edf4f1; }
+      .courses { display: grid; gap: 14px; padding: 0; margin: 0; list-style: none; }
+      .course { display: flex; align-items: center; gap: 22px; padding: 27px 28px; border: 1px solid #dce5e0; border-radius: 18px; background: #fff; color: inherit; text-decoration: none; transition: border-color .15s, box-shadow .15s; }
+      .course:hover { border-color: #83b7a9; box-shadow: 0 8px 24px #1a473b0a; }
+      .course-number { display: grid; place-items: center; flex: 0 0 46px; height: 46px; border-radius: 14px; background: #eaf4ef; color: #146b62; font-size: .85rem; font-weight: 800; }
+      .course-copy { flex: 1; min-width: 0; }
+      .course h2 { margin: 0 0 5px; font-size: 1.15rem; line-height: 1.4; }
+      .course p { margin: 0; color: #5f6d7f; font-size: .92rem; }
+      .course-arrow { color: #146b62; font-size: 1.4rem; }
+      a:focus-visible { outline: 3px solid #78b9ed; outline-offset: 4px; }
+      @media (max-width: 600px) { main { margin: 36px auto; } .page-head { margin-bottom: 25px; } .actions { width: 100%; } .actions > * { flex: 1; white-space: nowrap; padding-inline: 15px; } .course { gap: 15px; padding: 21px 18px; } .course-number { flex-basis: 38px; height: 38px; border-radius: 11px; } }
+      button, input { font: inherit; }
+      .button { min-height: 52px; padding: 12px 24px; border: 0; border-radius: 999px; background: #146b62; color: #fff; box-shadow: 0 6px 16px rgba(20, 107, 98, .14); cursor: pointer; font-weight: 750; }
+      .button:hover { background: #10594f; }
+      .button:focus-visible, input:focus-visible { outline: 3px solid #78b9ed; outline-offset: 3px; }
+      dialog { width: min(560px, calc(100% - 32px)); padding: 0; border: 0; border-radius: 22px; color: #172234; box-shadow: 0 28px 90px rgba(14, 25, 39, .4); }
+      dialog::backdrop { background: rgba(12, 25, 37, .55); backdrop-filter: blur(3px); }
+      .dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 27px 28px 0; }
+      h1, p { margin-top: 0; }
+      h1 { margin-bottom: 5px; font-size: 1.7rem; }
+      .dialog-head p, .hint { color: #5f6d7f; }
+      .close { width: 36px; height: 36px; border: 0; border-radius: 50%; background: #edf1f4; color: #405166; cursor: pointer; font-size: 1.3rem; line-height: 1; }
+      form { display: grid; gap: 18px; padding: 25px 28px 28px; }
+      label { display: grid; gap: 7px; font-weight: 700; }
+      input { width: 100%; min-height: 47px; padding: 10px 12px; border: 1px solid #c9d3dc; border-radius: 11px; }
+      input[type=file] { padding: 9px; font-size: .92rem; }
+      .hint { margin: -9px 0 0; font-size: .84rem; }
+      .status { min-height: 25px; margin: 0; color: #5f6d7f; font-size: .91rem; }
+      .status.error { color: #b42318; }
+      .status.success { color: #087443; }
+      .status a { color: inherit; font-weight: 750; }
+      .form-actions { display: flex; justify-content: flex-end; gap: 12px; }
+      .secondary { padding: 10px 14px; border: 0; border-radius: 999px; background: #edf1f4; color: #405166; cursor: pointer; font-weight: 700; }
+      .button[disabled], .secondary[disabled] { cursor: wait; opacity: .64; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="page-head">
+        <h1>课程列表</h1>
+        <nav class="actions" aria-label="作业入口">
+          <button class="button" type="button" data-open-dialog>提交作业</button>
+          <a class="record-link" href="/submissions/">已提交记录</a>
+        </nav>
+      </header>
+      <ul class="courses" aria-label="课程列表">
+        <li><a class="course" href="https://apcsp.gaojihe.cn/"><span class="course-number" aria-hidden="true">01</span><div class="course-copy"><h2>AP CSP · 计算机科学原理</h2><p>数据表示、压缩与分析，以及 Python 编程练习。</p></div><span class="course-arrow" aria-hidden="true">→</span></a></li>
+        <li><a class="course" href="https://rocket.gaojihe.cn/"><span class="course-number" aria-hidden="true">02</span><div class="course-copy"><h2>火箭与轨道实验</h2><p>从火箭着陆到轨道探索，在交互实验中学习与实践。</p></div><span class="course-arrow" aria-hidden="true">→</span></a></li>
+        <li><a class="course" href="/vibe-coding/"><span class="course-number" aria-hidden="true">03</span><div class="course-copy"><h2>Vibe Coding 实践指南</h2><p>提出需求、与 AI 协作、测试作品与版本管理，中英对照。</p></div><span class="course-arrow" aria-hidden="true">→</span></a></li>
+      </ul>
+    </main>
+    <dialog id="submission-dialog" aria-labelledby="dialog-title">
+      <div class="dialog-head"><div><h1 id="dialog-title">提交作业</h1><p>请准确填写以下信息后上传作品。</p></div><button class="close" type="button" aria-label="关闭提交表单" data-close-dialog>×</button></div>
+      <form id="submission-form"><label>班级<input name="className" autocomplete="organization" maxlength="60" required /></label><label>姓名<input name="studentName" autocomplete="name" maxlength="60" required /></label><label>上传作品<input name="work" type="file" required accept=".pdf,.zip,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.md,.py,.js,.html,.css,.png,.jpg,.jpeg,.gif,.webp,.mp4" /></label><p class="hint">单个文件不超过 25 MiB。</p><p class="status" id="form-status" role="status" aria-live="polite"></p><div class="form-actions"><button class="secondary" type="button" data-close-dialog>取消</button><button class="button" id="submit-button" type="submit">上传作品</button></div></form>
+    </dialog>
+    <script>
+      const dialog = document.querySelector('#submission-dialog');
+      const form = document.querySelector('#submission-form');
+      const status = document.querySelector('#form-status');
+      const submitButton = document.querySelector('#submit-button');
+      const closeDialog = () => { if (dialog.open) dialog.close(); };
+      document.querySelector('[data-open-dialog]').addEventListener('click', () => { status.textContent = ''; status.className = 'status'; dialog.showModal(); form.elements.className.focus(); });
+      document.querySelectorAll('[data-close-dialog]').forEach((button) => button.addEventListener('click', closeDialog));
+      dialog.addEventListener('click', (event) => { if (event.target === dialog) closeDialog(); });
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const file = form.elements.work.files[0];
+        if (!file) return;
+        if (file.size > 25 * 1024 * 1024) { status.textContent = '文件超过 25 MiB 限制。'; status.className = 'status error'; return; }
+        submitButton.disabled = true;
+        status.textContent = '正在上传作品，请勿关闭此窗口…';
+        status.className = 'status';
+        try {
+          const response = await fetch('https://share.gaojihe.cn/api/assignments', { method: 'POST', body: new FormData(form) });
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(body.error || '上传暂时未完成，请稍后重试。');
+          status.innerHTML = '已成功提交。<a href="/submissions/">查看提交记录</a>';
+          status.className = 'status success';
+          form.reset();
+        } catch (error) {
+          status.textContent = error instanceof Error ? error.message : '上传暂时未完成，请稍后重试。';
+          status.className = 'status error';
+        } finally { submitButton.disabled = false; }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mc-assignment-upload",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "routes": [{ "pattern": "share.example.com/api/assignments*", "zone_name": "example.com" }],
+  "r2_buckets": [{ "binding": "ASSIGNMENTS", "bucket_name": "your-private-assignment-bucket" }],
+  "kv_namespaces": [{ "binding": "RATE_LIMITS", "id": "YOUR_KV_NAMESPACE_ID" }],
+  "observability": { "enabled": true, "head_sampling_rate": 1 }
+}

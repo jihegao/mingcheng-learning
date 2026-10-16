@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="面向学生的 Vibe Coding 中英对照实践指南：项目流程、提出和审查需求、与 AI 协作、测试与版本管理。" />
+    <title>Vibe Coding 学生实践指南 · MingCheng</title>
+    <style>
+      :root { color-scheme:light; --ink:#17263b; --muted:#52647a; --paper:#f7fbf9; --line:#d7e5e2; --green:#116b61; --blue:#315f94; --soft:#e9f5f1; --gold:#f3e7c9; }
+      * { box-sizing:border-box; }
+      html { scroll-behavior:smooth; }
+      body { min-width:320px; margin:0; background:radial-gradient(circle at 8% 0,#d8efe7 0,transparent 28%),radial-gradient(circle at 93% 4%,#e2edfb 0,transparent 25%),var(--paper); color:var(--ink); font:16px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; }
+      a { color:inherit; }
+      a:focus-visible,summary:focus-visible { outline:3px solid #5f9fd7; outline-offset:4px; }
+      .shell { width:min(1120px,calc(100% - 40px)); margin:auto; }
+      .topbar { border-bottom:1px solid var(--line); background:rgba(255,255,255,.64); }
+      .topbar .shell { display:flex; justify-content:space-between; align-items:center; gap:20px; min-height:72px; }
+      .brand { color:var(--green); font-weight:850; text-decoration:none; letter-spacing:.02em; }
+      .toplinks { display:flex; flex-wrap:wrap; gap:10px 22px; font-size:.86rem; font-weight:700; }
+      .toplinks a { text-decoration:none; }
+      .toplinks a:hover { color:var(--green); text-decoration:underline; }
+      .hero { padding:75px 0 56px; }
+      .eyebrow,.section-tag { margin:0; color:var(--green); font:800 .75rem/1.4 ui-monospace,SFMono-Regular,monospace; letter-spacing:.13em; text-transform:uppercase; }
+      h1,h2,h3,p { margin-top:0; }
+      h1 { max-width:980px; margin:16px 0 22px; font-size:clamp(2.8rem,6vw,5.5rem); letter-spacing:-.06em; line-height:1.06; }
+      h1 span { display:block; margin-top:14px; color:var(--green); font-size:.43em; letter-spacing:-.035em; }
+      .hero-copy { display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:940px; }
+      .hero-copy p { margin-bottom:0; color:var(--muted); font-size:1.06rem; }
+      .hero-copy [lang="en"] { font-family:Georgia,serif; }
+      .principle { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:35px; padding:23px 27px; border-radius:17px; background:#153c43; color:#fff; }
+      .principle strong { display:block; margin-bottom:5px; color:#a4e9d6; }
+      .principle span { color:#e4f4ef; }
+      .contents { display:flex; flex-wrap:wrap; gap:9px; margin:28px 0 0; padding:0; list-style:none; }
+      .contents a { display:block; padding:8px 12px; border:1px solid #c6ded7; border-radius:999px; background:#fff; color:#275d59; font-size:.76rem; font-weight:750; text-decoration:none; }
+      .contents a:hover { background:var(--soft); }
+      main section { scroll-margin-top:28px; }
+      .chapter { padding:62px 0; border-top:1px solid var(--line); }
+      .chapter-head { max-width:870px; margin-bottom:27px; }
+      h2 { margin:9px 0 8px; font-size:clamp(1.8rem,3.5vw,2.65rem); letter-spacing:-.045em; line-height:1.17; }
+      h2 small { display:block; margin-top:8px; color:var(--green); font-size:.53em; font-weight:650; letter-spacing:-.02em; }
+      .chapter-head > p { margin:0; color:var(--muted); }
+      .chapter-head > p[lang="en"] { margin-top:5px; font-family:Georgia,serif; font-size:.91rem; }
+      .pair { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+      .panel { padding:24px 26px; border:1px solid var(--line); border-radius:17px; background:rgba(255,255,255,.82); }
+      .panel.en { border-color:#d6e1ed; background:#f4f8fc; font-family:Georgia,serif; }
+      .panel h3 { margin-bottom:9px; color:var(--green); font-size:1.16rem; line-height:1.35; }
+      .panel.en h3 { color:var(--blue); font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+      .panel p:last-child,.panel ul:last-child,.panel ol:last-child { margin-bottom:0; }
+      .panel p,.panel li { color:#31465b; }
+      .panel ul,.panel ol { margin:10px 0 0; padding-left:21px; }
+      .panel li + li { margin-top:9px; }
+      .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:25px 0; }
+      .step { padding:19px; border:1px solid var(--line); border-radius:14px; background:#fff; }
+      .step b { color:var(--green); font:800 .75rem ui-monospace,SFMono-Regular,monospace; }
+      .step strong { display:block; margin:9px 0 5px; font-size:1.04rem; }
+      .step span { display:block; color:var(--muted); font-size:.81rem; line-height:1.45; }
+      .note { margin:21px 0 0; padding:16px 20px; border-left:4px solid var(--green); border-radius:0 12px 12px 0; background:var(--soft); color:#244f4b; }
+      .note p { margin:0; }
+      .note p + p { margin-top:7px; }
+      .example { margin:23px 0 0; padding:24px 26px; border:1px solid #d9c99e; border-radius:17px; background:#fffaf0; }
+      .example h3 { margin-bottom:13px; font-size:1.13rem; }
+      .example .pair p { margin:0; }
+      .example .pair p + p { margin-top:12px; }
+      .template { margin:22px 0 0; padding:24px; border-radius:17px; background:#132c40; color:#f0f6f8; }
+      .template h3 { margin-bottom:16px; color:#bce9dc; }
+      .template .pair { gap:28px; }
+      .template p { margin:0; white-space:pre-line; }
+      .template [lang="en"] { color:#d6e7f1; }
+      .review-list { display:grid; gap:10px; margin-top:21px; }
+      .review-item { display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:17px 20px; border:1px solid var(--line); border-radius:13px; background:#fff; }
+      .review-item p { margin:0; }
+      .review-item strong { color:var(--green); }
+      .review-item [lang="en"] strong { color:var(--blue); }
+      .comparison { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:21px; }
+      .comparison > div { padding:20px; border-radius:14px; }
+      .comparison > div:first-child { background:#faeded; }
+      .comparison > div:last-child { background:#e8f4ee; }
+      .comparison b { display:block; margin-bottom:8px; }
+      .comparison p { margin:0; }
+      .comparison p + p { margin-top:8px; }
+      .test-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:13px; margin:22px 0; }
+      .test-grid article { padding:22px; border:1px solid var(--line); border-radius:15px; background:#fff; }
+      .test-grid b { color:var(--green); }
+      .test-grid h3 { margin:9px 0; font-size:1.03rem; }
+      .test-grid p { margin:0; color:var(--muted); font-size:.9rem; }
+      .test-grid p + p { margin-top:10px; }
+      .evidence { margin-top:20px; padding:21px 24px; border:1px solid #bad8ce; border-radius:14px; background:#edf7f3; }
+      .evidence p { margin:0; }
+      .evidence p + p { margin-top:8px; }
+      .commands { margin-top:22px; padding:21px 24px; border-radius:14px; background:#132c40; color:#d9ebed; }
+      .commands p { margin:0 0 10px; }
+      .commands code { display:block; overflow:auto; white-space:pre; color:#baf1dc; font: .85rem/1.7 ui-monospace,SFMono-Regular,monospace; }
+      .checklist { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:24px; }
+      .checklist .panel { background:#fff; }
+      .checklist li::marker { color:var(--green); }
+      footer { padding:27px 0 42px; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }
+      footer .shell { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+      footer a { color:var(--green); font-weight:700; }
+      @media (max-width:760px) { .hero { padding:52px 0 44px; }.hero-copy,.principle,.pair,.review-item,.comparison,.checklist { grid-template-columns:1fr; gap:12px; }.flow { grid-template-columns:repeat(2,1fr); }.test-grid { grid-template-columns:1fr; }.chapter { padding:49px 0; }.topbar .shell { min-height:65px; }.toplinks { gap:8px 13px; font-size:.77rem; }.template .pair { gap:18px; } }
+      @media (max-width:430px) { .shell { width:calc(100% - 30px); }.flow { grid-template-columns:1fr 1fr; }.step { padding:14px; }.step strong { font-size:.94rem; }.toplinks a:first-child { display:none; }.panel,.example,.template { padding:19px; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar"><div class="shell"><a class="brand" href="/">MINGCHENG · 明澄</a><nav class="toplinks" aria-label="站点导航"><a href="/">教学首页</a><a href="https://rocket.gaojihe.cn/">火箭实验室</a></nav></div></header>
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Student field guide · 学生实践指南</p>
+        <h1 id="page-title">Vibe Coding<span>从想法到可解释、可验证的作品<br />From an idea to work you can explain and verify</span></h1>
+        <div class="hero-copy"><p lang="zh-CN">Vibe Coding 是用自然语言与 AI 协作开发。你负责问题、需求、判断和验证；AI 可以帮助理解代码、提出方案和实现小改动。</p><p lang="en">Vibe coding means building software with an AI collaborator through natural language. You own the problem, requirements, decisions, and verification. AI can help explain code, suggest approaches, and make small changes.</p></div>
+        <div class="principle"><div lang="zh-CN"><strong>一句话原则</strong><span>先预测，做小改动，再测试，用证据解释结果。</span></div><div lang="en"><strong>One guiding rule</strong><span>Predict first. Make one small change. Test it. Explain the result with evidence.</span></div></div>
+        <nav aria-label="本页目录"><ul class="contents"><li><a href="#process">项目流程 · Process</a></li><li><a href="#request">提需求 · Request</a></li><li><a href="#review">审需求 · Review</a></li><li><a href="#build">AI 协作 · Build</a></li><li><a href="#test">测试 · Test</a></li><li><a href="#version">版本 · Version</a></li><li><a href="#submit">提交 · Submit</a></li></ul></nav>
+      </section>
+
+      <section class="chapter" id="process" aria-labelledby="process-title">
+        <div class="chapter-head"><p class="section-tag">01 / Project process</p><h2 id="process-title">看见整个项目流程<small>See the whole project lifecycle</small></h2><p lang="zh-CN">开始写代码前，先知道自己处在哪一步。每一步都应该留下能检查的产物。</p><p lang="en">Before coding, know which stage you are in. Leave something you can inspect at each stage.</p></div>
+        <div class="flow">
+          <div class="step"><b>01</b><strong>发现问题</strong><span>Identify the problem</span></div><div class="step"><b>02</b><strong>写清需求</strong><span>Write requirements</span></div><div class="step"><b>03</b><strong>审查与计划</strong><span>Review and plan</span></div><div class="step"><b>04</b><strong>小步实现</strong><span>Build in small steps</span></div>
+          <div class="step"><b>05</b><strong>测试与修复</strong><span>Test and fix</span></div><div class="step"><b>06</b><strong>检查改动</strong><span>Review changes</span></div><div class="step"><b>07</b><strong>保存版本</strong><span>Save a version</span></div><div class="step"><b>08</b><strong>提交与反思</strong><span>Submit and reflect</span></div>
+        </div>
+        <div class="pair"><div class="panel" lang="zh-CN"><h3>流程可以返回上一步</h3><p>测试失败时，回到需求、方案或代码找原因。需求变了，也要先更新验收标准。不要把“AI 已写完”当作“项目已完成”。</p></div><div class="panel en" lang="en"><h3>The process can loop back</h3><p>If a test fails, revisit the requirement, plan, or code. If the requirement changes, update the acceptance criteria first. “AI finished coding” does not mean the project is done.</p></div></div>
+      </section>
+
+      <section class="chapter" id="request" aria-labelledby="request-title">
+        <div class="chapter-head"><p class="section-tag">02 / Write a request</p><h2 id="request-title">怎样提出清楚的需求<small>How to write a clear request</small></h2><p lang="zh-CN">告诉 AI 要解决什么问题、什么算完成，再谈如何实现。</p><p lang="en">Tell AI what problem to solve and what counts as done before discussing implementation.</p></div>
+        <div class="pair"><div class="panel" lang="zh-CN"><h3>需求卡：七个要素</h3><ol><li><b>使用者：</b>谁会用？</li><li><b>问题：</b>现在遇到什么困难？</li><li><b>目标：</b>希望出现什么结果？</li><li><b>现状：</b>当前行为是什么？</li><li><b>范围：</b>这次改什么，不改什么？</li><li><b>限制：</b>要保留哪些功能或条件？</li><li><b>验收：</b>用什么操作和结果判断完成？</li></ol></div><div class="panel en" lang="en"><h3>Requirement card: seven parts</h3><ol><li><b>User:</b> Who will use it?</li><li><b>Problem:</b> What is difficult now?</li><li><b>Goal:</b> What result do you want?</li><li><b>Current behavior:</b> What happens today?</li><li><b>Scope:</b> What will change, and what stays outside this task?</li><li><b>Constraints:</b> What must keep working?</li><li><b>Acceptance:</b> What actions and results prove it is done?</li></ol></div></div>
+        <div class="example"><h3>贯穿示例 · Running example: 火箭游戏的低燃料提示 / A low-fuel warning</h3><div class="pair"><div lang="zh-CN"><p><b>模糊：</b>“把燃料做得更好。”</p><p><b>清楚：</b>“在降落游戏中，当剩余燃料不高于初始燃料的 20% 时显示‘燃料不足’。高于 20% 时不显示；重置后恢复初始状态。保留键盘和触控操作。本次不改变燃料消耗规则。”</p></div><div lang="en"><p><b>Vague:</b> “Make fuel better.”</p><p><b>Clear:</b> “In the landing game, show a ‘Low fuel’ warning when remaining fuel is at or below 20% of the starting amount. Hide it above 20%, and restore the initial state after reset. Keep keyboard and touch controls. Do not change fuel consumption in this task.”</p></div></div></div>
+      </section>
+
+      <section class="chapter" id="review" aria-labelledby="review-title">
+        <div class="chapter-head"><p class="section-tag">03 / Review requirements</p><h2 id="review-title">怎样审需求文档<small>How to review a requirements document</small></h2><p lang="zh-CN">在让 AI 改代码之前，逐项检查需求。发现空白或冲突，先澄清并改文档。</p><p lang="en">Review each requirement before asking AI to edit code. Clarify gaps or conflicts and update the document first.</p></div>
+        <div class="review-list">
+          <div class="review-item"><p lang="zh-CN"><strong>具体吗？</strong>“更好”“更快”“好看”指什么？有没有明确的对象和行为？</p><p lang="en"><strong>Is it specific?</strong> What do “better,” “faster,” or “nicer” mean? Is the object and behavior clear?</p></div>
+          <div class="review-item"><p lang="zh-CN"><strong>范围清楚吗？</strong>写出本次要做的事，以及不在本次范围内的事。</p><p lang="en"><strong>Is the scope clear?</strong> State what this change includes and what it leaves for later.</p></div>
+          <div class="review-item"><p lang="zh-CN"><strong>能测试吗？</strong>每条关键要求是否有可观察的输入、操作和预期结果？</p><p lang="en"><strong>Is it testable?</strong> Does each important requirement have an observable input, action, and expected result?</p></div>
+          <div class="review-item"><p lang="zh-CN"><strong>考虑边界了吗？</strong>例如恰好 20%、高于 20%、重置后分别会怎样？</p><p lang="en"><strong>Are edge cases covered?</strong> What happens at exactly 20%, above 20%, and after reset?</p></div>
+          <div class="review-item"><p lang="zh-CN"><strong>有冲突或风险吗？</strong>会不会破坏旧功能、泄露个人信息，或依赖尚未具备的资料？</p><p lang="en"><strong>Are there conflicts or risks?</strong> Could the change break existing features, expose personal data, or depend on missing information?</p></div>
+        </div>
+        <div class="comparison"><div><b>待澄清 · Needs clarification</b><p lang="zh-CN">“燃料少时提醒我。”少到多少？提醒出现在哪里？何时消失？</p><p lang="en">“Warn me when fuel is low.” How low? Where does the warning appear? When does it disappear?</p></div><div><b>可验收 · Ready to test</b><p lang="zh-CN">“≤20% 显示，>20% 隐藏；重置后隐藏；键盘和触控仍可操作。”</p><p lang="en">“Show at ≤20%; hide above 20%; hide after reset; keyboard and touch still work.”</p></div></div>
+        <div class="note"><p lang="zh-CN"><b>审查结果：</b>把不明确的问题列出来，确认答案后更新需求文档，再请 AI 实现。</p><p lang="en"><b>Review outcome:</b> List unclear questions, confirm the answers, update the requirements document, and then ask AI to build.</p></div>
+      </section>
+
+      <section class="chapter" id="build" aria-labelledby="build-title">
+        <div class="chapter-head"><p class="section-tag">04 / Work with AI</p><h2 id="build-title">让 AI 小步实现<small>Build with AI in small steps</small></h2><p lang="zh-CN">先让 AI 阅读和解释，再让它提出计划；你看懂计划后，才进入修改。</p><p lang="en">Ask AI to read and explain, then propose a plan. Start editing after you understand the plan.</p></div>
+        <div class="pair"><div class="panel" lang="zh-CN"><h3>一次协作的顺序</h3><ol><li>请 AI 找到相关文件并解释现有行为，先不改代码。</li><li>给出已审查的需求，让 AI 说明改动位置、风险和测试方法。</li><li>只做当前这一项改动。</li><li>看改动差异，问清楚每一处改动的原因。</li><li>自己运行测试和试玩；发现问题再提出下一轮具体要求。</li></ol></div><div class="panel en" lang="en"><h3>One collaboration cycle</h3><ol><li>Ask AI to locate the relevant files and explain current behavior without editing.</li><li>Share the reviewed requirement and ask for the edit location, risks, and test plan.</li><li>Make only this one change.</li><li>Inspect the diff and understand why each part changed.</li><li>Run tests and try the app yourself. Describe any failure precisely in the next request.</li></ol></div></div>
+        <div class="template"><h3>可复制的提示词 · Copyable prompt</h3><div class="pair"><p lang="zh-CN">请先阅读与燃料显示有关的代码，不要修改文件。告诉我当前燃料从哪里来、如何更新、在哪里显示。然后按下面已确认的需求提出最小改动计划：剩余燃料 ≤ 初始燃料的 20% 时显示提示；高于 20% 和重置后隐藏；保留键盘与触控操作；不改变燃料消耗规则。列出将修改的文件、需要测试的边界情况。等我确认计划后再改代码。</p><p lang="en">First read the code related to fuel display. Do not edit files yet. Explain where starting fuel comes from, how remaining fuel changes, and where it appears. Then propose the smallest change for this reviewed requirement: show a warning at ≤20% of starting fuel; hide it above 20% and after reset; preserve keyboard and touch controls; do not change fuel consumption. List the files you would change and the edge cases to test. Wait for my review before editing.</p></div></div>
+      </section>
+
+      <section class="chapter" id="test" aria-labelledby="test-title">
+        <div class="chapter-head"><p class="section-tag">05 / Test after AI builds</p><h2 id="test-title">AI 实现后如何测试<small>How to test after AI implements</small></h2><p lang="zh-CN">测试是拿实际结果对照需求。AI 的“已完成”描述不能代替你的运行结果。</p><p lang="en">Testing compares actual results with requirements. An AI claim of completion cannot replace what you run and observe.</p></div>
+        <div class="test-grid">
+          <article><b>01 / 自动测试</b><h3>运行项目原有测试<br />Run existing tests</h3><p lang="zh-CN">火箭项目运行 <code>npm test</code>。记录命令、通过或失败、失败信息。改了规则时补充对应测试。</p><p lang="en">For the rocket project, run <code>npm test</code>. Record the command, pass or failure, and any error. Add a focused test when a rule changes.</p></article>
+          <article><b>02 / 手动验收</b><h3>按需求逐条操作<br />Check acceptance cases</h3><p lang="zh-CN">示例：燃料 21% 不提示；20% 提示；重置后隐藏。写下预期与实际结果。</p><p lang="en">Example: no warning at 21%; warning at 20%; hidden after reset. Write down expected and actual results.</p></article>
+          <article><b>03 / 回归检查</b><h3>确认旧功能仍可用<br />Check existing behavior</h3><p lang="zh-CN">重新操作键盘和触控，检查画面、参数与重置。只测新提示不够。</p><p lang="en">Try keyboard and touch again. Check the display, settings, and reset. Testing only the new warning is not enough.</p></article>
+        </div>
+        <div class="pair"><div class="panel" lang="zh-CN"><h3>测试失败时</h3><p>保留失败证据：操作步骤、输入、预期、实际、错误信息。把这些交给 AI 分析原因；修复后重跑失败用例和相关旧用例。</p></div><div class="panel en" lang="en"><h3>When a test fails</h3><p>Keep the evidence: steps, input, expected result, actual result, and error message. Ask AI to investigate. After the fix, rerun the failed case and relevant existing cases.</p></div></div>
+        <div class="evidence"><p lang="zh-CN"><b>最小测试记录：</b>需求编号或描述｜测试环境｜操作与输入｜预期｜实际｜通过/失败｜截图或输出（如有）。</p><p lang="en"><b>Minimum test record:</b> requirement ID or description | environment | action and input | expected | actual | pass/fail | screenshot or output, if useful.</p></div>
+      </section>
+
+      <section class="chapter" id="version" aria-labelledby="version-title">
+        <div class="chapter-head"><p class="section-tag">06 / Version awareness</p><h2 id="version-title">建立版本管理意识<small>Build version control habits</small></h2><p lang="zh-CN">你需要知道“改了什么、为什么改、哪个版本可用、出错怎样恢复”。</p><p lang="en">Know what changed, why it changed, which version works, and how to recover.</p></div>
+        <div class="pair"><div class="panel" lang="zh-CN"><h3>每次改动的四个动作</h3><ol><li><b>留起点：</b>改动前保存一个可运行版本。</li><li><b>看差异：</b>确认 AI 只改了与需求有关的内容。</li><li><b>记原因：</b>用一句话记录本次改动和对应需求。</li><li><b>可恢复：</b>新版本失败时能回到上一个可用版本，再分析问题。</li></ol><p>一个版本尽量对应一个小目标。不要靠“最终版2-真的最终版”辨认作品。</p></div><div class="panel en" lang="en"><h3>Four actions for each change</h3><ol><li><b>Keep a baseline:</b> Save a working version before editing.</li><li><b>Inspect the diff:</b> Check that AI changed only what the requirement needs.</li><li><b>Record the reason:</b> Write one sentence linking the change to its requirement.</li><li><b>Know how to recover:</b> Return to the last working version if the new one fails, then investigate.</li></ol><p>Aim for one small goal per version. Avoid filenames such as “final-2-really-final.”</p></div></div>
+        <div class="commands"><p lang="zh-CN">如果项目使用 Git，可先查看状态和差异，测试通过后再保存提交。不要把密码或密钥放进版本库。</p><p lang="en">If your project uses Git, inspect status and changes first; commit after testing. Never add passwords or secret keys to the repository.</p><code>git status
+git diff
+git add &lt;changed-file&gt;
+git commit -m "Show low-fuel warning"</code></div>
+        <div class="note"><p lang="zh-CN">如果课堂项目暂时没有 Git，至少保留“修改前可运行版本”和简短的版本记录：日期、改动、测试结果。</p><p lang="en">If your classroom project does not use Git yet, keep a working before-change copy and a short version log: date, change, and test result.</p></div>
+      </section>
+
+      <section class="chapter" id="submit" aria-labelledby="submit-title">
+        <div class="chapter-head"><p class="section-tag">07 / Submit and reflect</p><h2 id="submit-title">提交能解释的作品<small>Submit work you can explain</small></h2><p lang="zh-CN">作品、证据和你的解释应当互相对应。</p><p lang="en">Your work, evidence, and explanation should agree.</p></div>
+        <div class="checklist"><div class="panel" lang="zh-CN"><h3>提交前检查</h3><ul><li>需求和验收条件已经写清。</li><li>自动测试与手动验收已有真实结果。</li><li>我看过改动，并能解释关键代码。</li><li>我能指出当前作品仍有哪些限制。</li><li>如果作业允许使用 AI，我记录了问过什么、采用了什么、怎样验证。</li></ul></div><div class="panel en" lang="en"><h3>Before you submit</h3><ul><li>The requirement and acceptance criteria are clear.</li><li>Automated and manual checks have real results.</li><li>I inspected the changes and can explain the important code.</li><li>I can name what the current work still cannot do.</li><li>If AI use is allowed for this assignment, I recorded what I asked, what I used, and how I verified it.</li></ul></div></div>
+        <div class="note"><p lang="zh-CN"><b>使用边界：</b>遵守教师对本次作业的 AI 使用要求。不要把个人资料、密码、密钥或受保护的测验题目发给 AI；不要提交自己无法解释的代码，也不要把未运行的测试写成“已通过”。</p><p lang="en"><b>Use boundaries:</b> Follow your teacher’s AI rules for this assignment. Do not send personal information, passwords, secret keys, or protected assessment questions to AI. Do not submit code you cannot explain or report an unrun test as passed.</p></div>
+      </section>
+    </main>
+    <footer><div class="shell"><span>Vibe Coding 学生实践指南 · Student Field Guide</span><span><a href="/">明澄教学</a> · <a href="https://rocket.gaojihe.cn/">火箭实验室</a></span></div></footer>
+  </body>
+</html>

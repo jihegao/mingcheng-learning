@@ -1,0 +1,228 @@
+{
+  "generatedAt": "2026-10-16T04:42:13.626Z",
+  "scope": "Repository static-source snapshot. This manifest alone does not assert live HTTP parity. No student records or attachments included.",
+  "assets": [
+    {
+      "path": "sites/mc/site/index.html",
+      "url": "https://mc.gaojihe.cn/",
+      "sha256": "cddb278f80da3afa0b93ca0fca39b8b30fc78533789ef6c030cb72dc7d795c54",
+      "bytes": 8877
+    },
+    {
+      "path": "sites/mc/site/submissions/index.html",
+      "url": "https://mc.gaojihe.cn/submissions/",
+      "sha256": "ec15797f081aebff56065d508e66cf088bb42d4aa9042e90f71f5d99aa472e09",
+      "bytes": 2805
+    },
+    {
+      "path": "sites/mc/site/vibe-coding/index.html",
+      "url": "https://mc.gaojihe.cn/vibe-coding/",
+      "sha256": "2f35d02ae1e5d7efff2c5ad1616ea453c61c1d6fd4224b3c07394ea41b349fe7",
+      "bytes": 26616
+    },
+    {
+      "path": "sites/rocket/index.html",
+      "url": "https://rocket.gaojihe.cn/",
+      "sha256": "dcfae15670c24ae4ba95e56944b6d5c2aa8bc59d97aca5df55ff17693ce66971",
+      "bytes": 6692
+    },
+    {
+      "path": "sites/rocket/landing/index.html",
+      "url": "https://rocket.gaojihe.cn/landing/",
+      "sha256": "8c0f820eadebfc3c4d38c5541f4598eb73e5549da183e89014a8919da0fd1aec",
+      "bytes": 12156
+    },
+    {
+      "path": "sites/rocket/styles.css",
+      "url": "https://rocket.gaojihe.cn/styles.css",
+      "sha256": "aa4adefa65c37cc0b1dabe3678ff5d5afb1f5b0d0c35a551ec76b2d476a79d24",
+      "bytes": 58007
+    },
+    {
+      "path": "sites/rocket/catalog.css",
+      "url": "https://rocket.gaojihe.cn/catalog.css",
+      "sha256": "acd9b7002d5e4a2b26f895ee2874180272da3709b5af86ba3f53d66434a01f85",
+      "bytes": 12004
+    },
+    {
+      "path": "sites/rocket/topic.js",
+      "url": "https://rocket.gaojihe.cn/topic.js",
+      "sha256": "af6decae8d00fd7bf3502bfacdea8ad99b869f368bc3cb5810b8ce9ca58b0765",
+      "bytes": 922
+    },
+    {
+      "path": "sites/rocket/submission.js",
+      "url": "https://rocket.gaojihe.cn/submission.js",
+      "sha256": "7d2450fc3b568b110dc48d79394b17703b4f83cc4bf1ca698c08d553acc1dafc",
+      "bytes": 2230
+    },
+    {
+      "path": "sites/rocket/src/physics.js",
+      "url": "https://rocket.gaojihe.cn/src/physics.js",
+      "sha256": "dbe407f8a16eeb992a8eb3e48b3004f40e8b60f31d25a5a8570282d51b92b365",
+      "bytes": 2516
+    },
+    {
+      "path": "sites/rocket/src/lander.js",
+      "url": "https://rocket.gaojihe.cn/src/lander.js",
+      "sha256": "8cb57483b82f25bfd886b9aa0f9356b5cae1c59ae92389aa624801666d20fb74",
+      "bytes": 8317
+    },
+    {
+      "path": "sites/rocket/stage1/index.html",
+      "url": "https://rocket.gaojihe.cn/stage1/",
+      "sha256": "c0b5f2d1c276cb6b8ab69a73188b4322caceba52ce97fa5d181fbd8574aab911",
+      "bytes": 3288
+    },
+    {
+      "path": "sites/rocket/stage1/main.js",
+      "url": "https://rocket.gaojihe.cn/stage1/main.js",
+      "sha256": "eea122e0eb5ff6f606aaf40132eb15c93fa71f29de4afa4be501327f949906f2",
+      "bytes": 1904
+    },
+    {
+      "path": "sites/rocket/stage2/index.html",
+      "url": "https://rocket.gaojihe.cn/stage2/",
+      "sha256": "09c6b435a953ea4e2113e7fa02995a6d883bb655168d4ed82cfd32916c3306a2",
+      "bytes": 4345
+    },
+    {
+      "path": "sites/rocket/stage2/main.js",
+      "url": "https://rocket.gaojihe.cn/stage2/main.js",
+      "sha256": "7b311dc426be71784fd930362c4a8aed6e00fdb5bc31422f5477986f52a52431",
+      "bytes": 2953
+    },
+    {
+      "path": "sites/rocket/src/orbit-physics.js",
+      "url": "https://rocket.gaojihe.cn/src/orbit-physics.js",
+      "sha256": "4298295b5d9ee8d3d3c31168cfedf493b50f448c8d3b4e221468ee9d4066695a",
+      "bytes": 10283
+    },
+    {
+      "path": "sites/rocket/src/orbit-game.js",
+      "url": "https://rocket.gaojihe.cn/src/orbit-game.js",
+      "sha256": "e8474fd627403cbc7e42e5f43091f760f29193601cfa1c44be8478f2b4d3c086",
+      "bytes": 9383
+    },
+    {
+      "path": "sites/rocket/orbit/index.html",
+      "url": "https://rocket.gaojihe.cn/orbit/",
+      "sha256": "69466fc99fbe84bea7f9ca458c46627fe74f65f64463d51540c241eff07dd869",
+      "bytes": 3888
+    },
+    {
+      "path": "sites/rocket/orbit/lab/index.html",
+      "url": "https://rocket.gaojihe.cn/orbit/lab/",
+      "sha256": "e2ce8d01d22d4b3a8bf9ff349c66b776eec051fde16d0fe56e0dbe9e504a1d13",
+      "bytes": 7398
+    },
+    {
+      "path": "sites/rocket/orbit/lab/main.js",
+      "url": "https://rocket.gaojihe.cn/orbit/lab/main.js",
+      "sha256": "69bcd44bb23fe7e5f4a924bc390482ac25380c2510497ec901b4013750138885",
+      "bytes": 16055
+    },
+    {
+      "path": "sites/rocket/orbit/reading/index.html",
+      "url": "https://rocket.gaojihe.cn/orbit/reading/",
+      "sha256": "d4cf7f63d31d7e0f0e3b27ea2178a84be0e0a56f1a9b24b5ae40f34dca269835",
+      "bytes": 7507
+    },
+    {
+      "path": "sites/rocket/moon/index.html",
+      "url": "https://rocket.gaojihe.cn/moon/",
+      "sha256": "d32a663a31495196c77f81ec8e9c8432be1f7c2f7e1892b964b2e0a82f18a266",
+      "bytes": 6306
+    },
+    {
+      "path": "sites/rocket/moon/main.js",
+      "url": "https://rocket.gaojihe.cn/moon/main.js",
+      "sha256": "156b3de11fe5765048846e466e00a0e857c2266647c0ca47febd06a48f25dbbb",
+      "bytes": 13390
+    },
+    {
+      "path": "sites/rocket/moon/physics.js",
+      "url": "https://rocket.gaojihe.cn/moon/physics.js",
+      "sha256": "9ef51e8af2aa629c9e837644459ff96069df32038af9e4823dec5778284a65a4",
+      "bytes": 5305
+    },
+    {
+      "path": "sites/rocket/moon/style.css",
+      "url": "https://rocket.gaojihe.cn/moon/style.css",
+      "sha256": "39c49f00d922b24b423c9517426c8442ff152c40543623bb5d3859d79326397f",
+      "bytes": 8353
+    },
+    {
+      "path": "sites/rocket/moon/reading/index.html",
+      "url": "https://rocket.gaojihe.cn/moon/reading/",
+      "sha256": "268996d44900e7cfa49ab6c4b603c29b555f46eaf70ee6b1e9c07852ada1be01",
+      "bytes": 8103
+    },
+    {
+      "path": "sites/apcsp/site/index.html",
+      "url": "https://apcsp.gaojihe.cn/",
+      "sha256": "fcb83a4dc24870ee134b2731f6257a384ee8139acd166ec8965418a82eaf7deb",
+      "bytes": 3035
+    },
+    {
+      "path": "sites/apcsp/site/404.html",
+      "url": "https://apcsp.gaojihe.cn/404.html",
+      "sha256": "2bf3e2dc1029c5e1d558843b04f20430b1ba9138d81e4cc70435797e5d0bf52c",
+      "bytes": 261
+    },
+    {
+      "path": "sites/apcsp/site/assets/style.css",
+      "url": "https://apcsp.gaojihe.cn/assets/style.css",
+      "sha256": "5c1337e915ed25aa9955f4e7e1615e21e9440b174e981b79e47f8869a019279e",
+      "bytes": 2623
+    },
+    {
+      "path": "sites/apcsp/site/lectures/2-1/index.html",
+      "url": "https://apcsp.gaojihe.cn/lectures/2-1/",
+      "sha256": "a3a5a5e0c29ff19cebf6d9145c4dd7a60b2816d33ac1ab8d33f470450955546f",
+      "bytes": 2773
+    },
+    {
+      "path": "sites/apcsp/site/lectures/2-2/index.html",
+      "url": "https://apcsp.gaojihe.cn/lectures/2-2/",
+      "sha256": "e104b4f580c0ed25b2543db5f3af3a31382fcf863d3852c0f415a97d26477c2e",
+      "bytes": 6900
+    },
+    {
+      "path": "sites/apcsp/site/lectures/2-3/index.html",
+      "url": "https://apcsp.gaojihe.cn/lectures/2-3/",
+      "sha256": "3dd656d9d6819bbc1954cdeed34ef3f56db88e6e9fb47105c7bdbf3edd7046c2",
+      "bytes": 3440
+    },
+    {
+      "path": "sites/apcsp/site/lectures/2-4/index.html",
+      "url": "https://apcsp.gaojihe.cn/lectures/2-4/",
+      "sha256": "1030daeb14107ad3be2b05562069dfb80b84592a8885f85f190c2b30b88769be",
+      "bytes": 3344
+    },
+    {
+      "path": "sites/apcsp/site/practice/cli-diary/index.html",
+      "url": "https://apcsp.gaojihe.cn/practice/cli-diary/",
+      "sha256": "bf29865713a9dc4cf6f0bb2fc6106cf8d8c13c1923a187bd81154f61a79c149e",
+      "bytes": 11542
+    },
+    {
+      "path": "sites/apcsp/site/practice/cli-diary/diary.py",
+      "url": "https://apcsp.gaojihe.cn/practice/cli-diary/diary.py",
+      "sha256": "d750c906018aaf8d63c6b73c0c3ed599a27e8941d1dc3f4ed2cffe177fcc2a3f",
+      "bytes": 1928
+    },
+    {
+      "path": "sites/apcsp/site/data/W09_博客文章_清洗前.csv",
+      "url": "https://apcsp.gaojihe.cn/data/W09_%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0_%E6%B8%85%E6%B4%97%E5%89%8D.csv",
+      "sha256": "f25efb3c11f923b47141d5f2488918ec8ac83e7c063336eab08b90d2c12c1b11",
+      "bytes": 1881
+    },
+    {
+      "path": "sites/apcsp/site/data/W09_博客文章_已清洗.csv",
+      "url": "https://apcsp.gaojihe.cn/data/W09_%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0_%E5%B7%B2%E6%B8%85%E6%B4%97.csv",
+      "sha256": "ad1d7a669f10082050f31050e04f615debec85466b7a4a170cfe0f47ccd2ac6f",
+      "bytes": 1655
+    }
+  ]
+}

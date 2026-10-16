@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07101f" />
+    <meta name="description" content="火箭学习实验室：火箭降落、绕地飞行与地月航行的互动课程目录。" />
+    <title>火箭学习实验室 · 课程目录</title>
+    <link rel="stylesheet" href="./catalog.css" />
+  </head>
+  <body class="catalog-page">
+    <header class="catalog-nav">
+      <a class="catalog-brand" href="./" aria-label="火箭学习实验室首页"><span>R</span><b>ROCKET LAB<small>火箭学习实验室</small></b></a>
+      <div class="catalog-nav-actions"><a href="#projects">探索课程 ↓</a><a href="https://mc.gaojihe.cn/vibe-coding/">Vibe Coding 指南 ↗</a><button class="catalog-submit-button" type="button" data-open-submission>提交作业 <span aria-hidden="true">↗</span></button></div>
+    </header>
+
+    <main>
+      <section class="catalog-hero">
+        <div class="catalog-intro">
+          <p class="catalog-kicker">SCIENCE × ENGINEERING × ENGLISH</p>
+          <h1>从一次降落，<br />到一场<span>地月航行。</span></h1>
+          <p>动手操作火箭，用可见的轨迹和数据理解推力、重力与工程设计。按顺序学习，也可以直接进入任意实验。</p>
+          <a class="catalog-hero-link" href="#projects">选择一个项目 <span>↘</span></a>
+          <a class="catalog-guide-inline" href="https://mc.gaojihe.cn/vibe-coding/">阅读 Vibe Coding 中英对照指南 →</a>
+        </div>
+        <div class="catalog-journey" aria-label="课程路线：降落、进入轨道、地月航行">
+          <div class="catalog-planet"></div>
+          <div class="catalog-path"></div>
+          <span class="catalog-marker marker-landing">01 <b>LAND</b></span>
+          <span class="catalog-marker marker-orbit">02 <b>ORBIT</b></span>
+          <span class="catalog-spacecraft">▲</span>
+        </div>
+      </section>
+
+      <section class="catalog-projects" id="projects" aria-labelledby="catalog-heading">
+        <div class="catalog-section-head"><div><small>COURSE DIRECTORY · 课程目录</small><h2 id="catalog-heading">选择你的任务</h2></div><p>三个专题可以独立体验：从降落控制到发射入轨，再通过手动变轨探索地月航行。</p></div>
+        <div class="catalog-grid">
+          <article class="catalog-card landing-card">
+            <div class="catalog-card-top"><span>01 / LANDING</span><span>控制与反馈</span></div>
+            <div class="catalog-card-art landing-art" aria-hidden="true"><div class="catalog-mini-rocket">▲<i></i></div><div class="catalog-pad"></div><div class="catalog-down-arrow">↓</div></div>
+            <div class="catalog-card-copy"><p>第一期 · 火箭降落</p><h3>把速度降下来，<br />让火箭安全着陆。</h3><p>先玩降落小游戏，再调节重力与推力，观察瞬时速度和接地速度。专题内含英文工程阅读。</p></div>
+            <div class="catalog-card-actions"><a class="catalog-main-action" href="./landing/">进入火箭降落专题 <span>↗</span></a><a href="./stage1/">直接玩降落游戏</a><a href="./stage2/">参数实验</a></div>
+          </article>
+
+          <article class="catalog-card orbit-card">
+            <div class="catalog-card-top"><span>02 / ORBIT</span><span>轨道与分级</span></div>
+            <div class="catalog-card-art orbit-art" aria-hidden="true"><div class="catalog-mini-earth"></div><div class="catalog-mini-orbit"></div><span>▲</span></div>
+            <div class="catalog-card-copy"><p>第二期 · 绕地飞行</p><h3>自己组装火箭，<br />把飞行路径闭合。</h3><p>选择油箱、发动机和载荷，手动点火与转向，分离一级火箭，比较实际轨迹与预测轨道。</p></div>
+            <div class="catalog-card-actions"><a class="catalog-main-action" href="./orbit/lab/">进入轨道实验室 <span>↗</span></a><a href="./orbit/">查看专题介绍</a><a href="./orbit/reading/">英文阅读</a></div>
+          </article>
+          <article class="catalog-card moon-card">
+            <div class="catalog-card-top"><span>03 / EARTH–MOON</span><span>转移与捕获</span></div>
+            <div class="catalog-card-art moon-art" aria-hidden="true"><div class="catalog-mini-earth"></div><div class="catalog-transfer-path"></div><span class="catalog-mini-moon">●</span><span class="catalog-transfer-craft">▲</span></div>
+            <div class="catalog-card-copy"><p>第三期 · 地月航行</p><h3>追上移动的月球，<br />探索安全绕月轨道。</h3><p>观察地月系统，从高地球轨道手动点火，绘制转移轨迹，再尝试近月减速。每个阶段配有目标解释和英文阅读。</p></div>
+            <div class="catalog-card-actions"><a class="catalog-main-action" href="./moon/">进入地月航行实验室 <span>↗</span></a><a href="./moon/reading/">英文阅读与任务单</a></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="catalog-footer"><span>ROCKET LAB · 火箭学习实验室</span><p>课堂教学模型，用于探索和比较，不用于预测真实飞行任务。</p></footer>
+    <dialog class="submission-dialog" id="submission-dialog" aria-labelledby="submission-title">
+      <div class="submission-head"><div><h2 id="submission-title">提交作业</h2><p>填写班级、姓名并上传你的作品。</p></div><button class="submission-close" type="button" aria-label="关闭提交表单" data-close-submission>×</button></div>
+      <form id="submission-form">
+        <label>班级<input name="className" autocomplete="organization" maxlength="60" required placeholder="例如：Class 1" /></label>
+        <label>姓名<input name="studentName" autocomplete="name" maxlength="60" required placeholder="请输入姓名" /></label>
+        <label>上传作品<input name="work" type="file" required accept=".pdf,.zip,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.md,.py,.js,.html,.css,.png,.jpg,.jpeg,.gif,.webp,.mp4" /></label>
+        <p class="submission-hint">单个文件不超过 25 MiB。文件仅供教学评阅，不会公开展示。</p>
+        <p class="submission-status" id="submission-status" role="status" aria-live="polite"></p>
+        <div class="submission-actions"><button class="submission-cancel" type="button" data-close-submission>取消</button><button class="catalog-submit-button" id="submission-send" type="submit">上传作品</button></div>
+      </form>
+    </dialog>
+    <script src="./submission.js" defer></script>
+  </body>
+</html>

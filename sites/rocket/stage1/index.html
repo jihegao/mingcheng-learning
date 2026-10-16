@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>阶段 1 · 火箭降落</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="lab-page">
+    <header class="topbar">
+      <a class="brand" href="../">火箭降落实验室 <small>ROCKET LAB</small></a>
+      <nav class="stage-switch" aria-label="学习阶段">
+        <a href="./" aria-current="page">阶段 1</a>
+        <a href="../stage2/">阶段 2</a>
+      </nav>
+    </header>
+
+    <main class="lab-shell">
+      <section class="flight-deck" aria-label="游戏画面">
+        <div class="canvas-wrap">
+          <canvas id="game" aria-label="火箭降落游戏"></canvas>
+          <div class="hud" aria-live="polite">
+            <div class="hud-group">
+              <div class="hud-chip"><span>高度</span><strong id="altitude">92.0 m</strong></div>
+              <div class="hud-chip"><span>速度</span><strong id="speed">4.7 m/s</strong></div>
+              <div class="hud-chip"><span>燃料</span><strong id="fuel">100%</strong></div>
+            </div>
+          </div>
+          <div class="game-message" id="message">
+            <span class="message-label">MISSION 01</span>
+            <h2 id="message-title">降落到蓝色平台</h2>
+            <p id="message-body">调整姿态，控制点火时机。接地时速度不超过 3 m/s，倾角不超过 15°。</p>
+            <button class="primary-button" id="start">开始飞行</button>
+          </div>
+        </div>
+        <div class="control-strip">
+          <div class="control-help"><span class="key">A</span><span class="key">D</span> 姿态　<span class="key">W</span> / <span class="key">↑</span> / <span class="key">Space</span> 点火</div>
+          <div class="touch-controls" aria-label="触控操作">
+            <button class="touch-button" id="left" aria-label="向左旋转">↶</button>
+            <button class="touch-button touch-button--thrust" id="thrust">点火</button>
+            <button class="touch-button" id="right" aria-label="向右旋转">↷</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <span class="panel-label">STAGE 01 · CONTROL</span>
+        <h1>学会安全降落</h1>
+        <p>这一阶段隐藏物理参数。只根据画面与仪表调整操作，感受火箭不会立刻停下。</p>
+        <div class="divider"></div>
+        <div class="check-list">
+          <div class="check-row"><span>目标区域</span><strong>中心 ±13 m</strong></div>
+          <div class="check-row"><span>安全总速度</span><strong>≤ 3.0 m/s</strong></div>
+          <div class="check-row"><span>安全横向速度</span><strong>≤ 1.5 m/s</strong></div>
+          <div class="check-row"><span>安全倾角</span><strong>≤ 15°</strong></div>
+        </div>
+        <div class="status-card" id="status-card">
+          <span>FLIGHT STATUS</span>
+          <strong id="status">等待发射</strong>
+        </div>
+        <p class="model-note">提示：先消除水平漂移，再用短促点火降低下降速度。</p>
+      </aside>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

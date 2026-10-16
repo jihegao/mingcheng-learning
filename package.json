@@ -1,0 +1,21 @@
+{
+  "name": "mingcheng-learning",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "npm run check && node --test sites/rocket/tests/*.test.js",
+    "build": "node scripts/build.mjs",
+    "verify:live": "node scripts/verify-live.mjs",
+    "manifest": "node scripts/manifest.mjs",
+    "preview:mc": "python3 -m http.server 4173 --directory sites/mc/site",
+    "preview:rocket": "python3 -m http.server 4174 --directory sites/rocket/dist",
+    "preview:apcsp": "python3 -m http.server 4175 --directory sites/apcsp/site",
+    "deploy:mc": "wrangler deploy --config sites/mc/wrangler.jsonc",
+    "deploy:rocket": "npm run build && wrangler deploy --config sites/rocket/wrangler.jsonc",
+    "deploy:apcsp": "wrangler deploy --config sites/apcsp/wrangler.jsonc"
+  },
+  "devDependencies": { "wrangler": "4.149.0" }
+}
