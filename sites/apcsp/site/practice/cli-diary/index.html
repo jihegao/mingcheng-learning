@@ -18,6 +18,7 @@
     <a class="back" href="/">← Back to all handouts and practice</a>
     <div class="notice"><strong>Use fictional entries in class.</strong> The finished program writes readable text to your own computer. It is not encrypted. Do not enter passwords, private student information, or real personal stories; do not upload the saved file to AI tools, CodeHS, or a public repository.</div>
 
+    <p><a href="#frq">Create / FRQ：考试流程与日记程序作答练习 ↓</a></p>
     <article>
       <section id="plan">
         <h2>0. Decide what the first version must do</h2>
@@ -172,6 +173,57 @@ def load_entries():
         </ol>
         <h2>Independent checkpoint</h2>
         <p>Close AI assistance. Demonstrate one successful run and explain one input, one processing step, one output, why the time stamp is metadata, and one privacy limit of a plain-text file. Submit your code, fictional test output, and explanation. Do not submit the saved diary file.</p>
+      </section>
+
+      <section id="frq" lang="zh-CN">
+        <h2>8. 如果用日记程序练习 Create / FRQ，应该怎样回答？</h2>
+        <p>这里的文件名是 <code>diary.py</code>。AP CSP 的做法是先完成 Create Performance Task，再在考试中围绕自己的程序回答书面问题。下面用这份课堂程序示范如何寻找代码证据，所有练习情境与英文示例均为原创，不是官方题干或固定标准答案。</p>
+
+        <h3>先了解考试流程</h3>
+        <ol>
+          <li><strong>考前开发：</strong>学校提供至少 9 小时课堂时间完成 Create。程序需要真实使用输入、输出、管理复杂度的列表，以及带有效参数的学生自编过程；选定过程内部要包含顺序、选择和迭代，并在程序中被调用。</li>
+          <li><strong>考前提交：</strong>在 AP Digital Portfolio 分别将完整代码 PDF、运行视频和 Personalized Project Reference（PPR）提交为 final。视频须展示输入、功能、输出，最长 1 分钟、最大 30 MB，不含身份信息或旁白；视频与 PPR 必须独立完成。完整代码需保留外部代码/AI 来源说明；PPR 只能放规定的代码截图，不能含注释、课程笔记或预写答案。</li>
+          <li><strong>考试当天：</strong>在 Bluebook 完成 Section I：70 道选择题、120 分钟，占 70%；Section II：2 道书面题、共 4 个提示、60 分钟。Create 与书面回答合计占 30%。答书面题时可使用已按时提交为 final 的本人 PPR，不能把本教学页当作考场参考。</li>
+          <li><strong>现场按题回答：</strong>四类是 WR1（设计、功能和目的）、WR2(a)（算法）、WR2(b)（错误与测试）、WR2(c)（数据与过程抽象）。每年问法会变；先圈出题目要求，再用自己的代码、具体数据和因果解释回应。</li>
+        </ol>
+        <div class="notice"><strong>课堂练习与正式作品：</strong>本页及下载代码属于教学参考和练习任务，不能原样作为正式 Create 提交，也不能把下面的练习答案填进 PPR。正式任务应按当年规则完成自己的项目，标注允许使用的外部/AI 代码来源，并能独立解释。这里讨论的是“同类日记项目如何准备”，不是认可这份参考代码为学生原创作品。</div>
+
+        <h3>先选对程序证据，再写回答</h3>
+        <p>就代码结构而言，现有 <code>show_entries(entries)</code> 是清晰的过程分析对象：参数 <code>entries</code> 决定输出哪些记录；先检查空列表（选择），再按顺序遍历记录（迭代），取出时间和正文并打印（顺序）。<code>main()</code> 中的 <code>show_entries(load_entries())</code> 是一次调用。<code>search_entries()</code> 没有参数，不能因为它含搜索逻辑就把它当作符合 PPR 参数要求的过程。这些结构分析不代表参考代码满足学生原创要求。</p>
+        <p>练习列表证据时，可沿着 <code>search_entries()</code> 中的 <code>matches = [...]</code>（把筛选结果存入列表）与 <code>show_entries(matches)</code> 的调用，追踪到 <code>show_entries</code> 内对参数 <code>entries</code> 的遍历；这时二者指向同一个列表。应同时看清存储、传参和使用，不能把文件 <code>entries.jsonl</code> 本身叫作 Python 列表。正式 PPR 应从自己的程序中独立选择对应片段。</p>
+
+        <h3>WR1 · Program Design, Function, and Purpose</h3>
+        <p><strong>练习方向：</strong>程序服务谁、解决什么问题？说明一个输入如何产生输出。回答要区分目的（为什么需要）与功能（程序做什么）。</p>
+        <div class="card"><p><strong>英文示例：</strong>My program helps a learner save and retrieve short practice notes. The user enters a note through the terminal, and the program stores its text with a timestamp in a local file. When the user enters a search word, the program displays matching notes. This helps the learner find earlier notes without reading every saved entry manually.</p></div>
+        <p><strong>代码依据：</strong><code>input()</code> 接收正文/关键词；<code>save_entry(text)</code> 写文件；搜索用 <code>casefold()</code> 忽略大小写；<code>show_entries</code> 输出编号、时间、正文。若题目只问某一项，就聚焦该项，不必把所有功能重写一遍。</p>
+
+        <h3>WR2(a) · Algorithm Development</h3>
+        <p><strong>练习方向：</strong>解释 <code>show_entries(entries)</code> 的算法，并追踪迭代次数。假定传入两条有效记录，正文依次为 <code>Learn Python</code> 和 <code>Read a book</code>。</p>
+        <div class="card"><p><strong>英文示例：</strong>The procedure first checks whether entries is empty. If it is empty, it prints a message and returns. Otherwise, the for loop visits each entry once. With two entries, the loop body executes twice. On each iteration, it prints the entry number, timestamp, and text, in the original list order.</p></div>
+        <p><strong>说明原因：</strong>空列表会提前返回，循环执行 0 次；非空且记录结构有效时，循环体执行 <code>len(entries)</code> 次。参数换成另一组记录，输出也会改变。若问无限循环，须针对自己的循环解释：当前 <code>for</code> 遍历有限且未被追加的列表会结束；假设把它改成没有退出条件的 <code>while True</code>，才会无限重复。不要把菜单中持续等待用户输入与这个列表循环混为一谈。</p>
+
+        <h3>WR2(b) · Errors and Testing</h3>
+        <p><strong>练习方向：</strong>给出测试输入、预期结果以及它验证的行为。测试前提：使用一个只含下面两条虚构记录的练习数据文件。</p>
+        <table>
+          <thead><tr><th>测试输入 / 调用</th><th>预期结果</th><th>验证什么</th></tr></thead>
+          <tbody>
+            <tr><td>保存 Learn Python、Read a book；搜索 python</td><td>只显示 Learn Python 对应的记录</td><td>大小写归一化和匹配分支</td></tr>
+            <tr><td>搜索 ocean</td><td>No matching entries.</td><td>无匹配时的空列表路径</td></tr>
+            <tr><td>搜索只输入空格</td><td>Enter a search word.</td><td>输入检查；此时不会调用显示过程</td></tr>
+            <tr><td>直接调用 show_entries([])</td><td>No matching entries.；随后返回</td><td>选定过程的空列表分支</td></tr>
+          </tbody>
+        </table>
+        <div class="card"><p><strong>英文示例：</strong>With the two saved notes “Learn Python” and “Read a book”, I would search for “python”. I expect only the first note to be displayed because both the search term and each note are case-folded before the substring comparison. This checks that capitalization does not prevent a match.</p></div>
+        <p><strong>如果题目问错误：</strong>把 <code>entry["text"]</code> 误改为 <code>entry["body"]</code>，在显示现有的非空记录时会产生 <code>KeyError</code>，因为记录只有 <code>created_at</code> 和 <code>text</code> 键；恢复正确键名可修复。空列表会提前返回，不能触发这个错误。若题目要求“过程的测试调用”，应直接给 <code>show_entries</code> 的具体参数及结果，而不只写菜单操作。</p>
+
+        <h3>WR2(c) · Data and Procedural Abstraction</h3>
+        <p><strong>练习方向：</strong>指出具体列表、元素内容，以及它如何管理复杂度；再说明参数化过程如何减少重复。</p>
+        <div class="card"><p><strong>英文示例：</strong>The matches list stores the diary records that satisfy the search condition. Each record contains a timestamp and text. A single loop can display any number of matching records. Without this list, using a separate variable and display statement for each match would require code changes as the number of matches grows. The show_entries(entries) procedure also lets List and Search share the same display logic; a change to the output format can be made in one place.</p></div>
+        <p><strong>如果题目要求新算法：</strong>例如统计正文恰好等于目标值的记录：先把计数设为 0；逐条遍历列表；比较当前记录的 <code>text</code> 与目标值，相等就加 1；遍历结束后返回计数。若题目提供比较过程，就按其规格调用；不能把“正文完全相等”偷换成原程序的“包含关键词”。这是一种算法描述练习，不是现有程序已实现的功能。</p>
+
+        <h3>交卷前自查</h3>
+        <p>每个回答都检查：是否回应题目动词？是否点名代码中的变量或过程？是否给出题目要求的具体输入、次数或输出？是否解释为什么？是否与最终代码和 PPR 一致？这些示例只用于练习；正式考试根据当年的实际提示独立作答。</p>
+        <p class="source">来源与核对（2026-10-16）：本地 College Board《AP CSP Student Handouts / Student Task Directions》PDF 第 3–7 页（印刷页 1–5：课堂时间、代码、视频、PPR），第 8–13 页（印刷页 6–11：原创、AI、练习任务与提交规则）；<a href="https://apcentral.collegeboard.org/media/pdf/ap-csp-student-task-directions.pdf">官方任务说明</a>。考试结构与四类学习目标另经 <a href="https://apcentral.collegeboard.org/courses/ap-computer-science-principles/exam">AP Central 考试页</a>核对。具体日期及要求以本人考试年度官方公告为准。</p>
       </section>
     </article>
     <p class="source">Classroom connection: AP CSP Course and Exam Description, Effective Fall 2023, Topic 2.3 (data and metadata), PDF pages 58–60; Topic 2.4 (filtering data with programs), PDF pages 61–62. This is an original coding exercise, not an official AP question or the Create performance task.</p>
